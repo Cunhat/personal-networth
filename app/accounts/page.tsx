@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Account } from "@/components/account-component"
 
 export default function Accounts() {
   return (
@@ -17,9 +18,7 @@ export default function Accounts() {
       <Card className="">
         <CardHeader>
           <div className="flex justify-between">
-            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-              Categories
-            </h4>
+            <CardTitle>Categories</CardTitle>
             <Button>Create Category</Button>
           </div>
         </CardHeader>
@@ -33,37 +32,18 @@ export default function Accounts() {
 
       <Card className="">
         <CardHeader>
-          <CardTitle>Accounts list</CardTitle>
+          <div className="flex justify-between">
+            <CardTitle>Accounts list</CardTitle>
+            <Button>Create Account</Button>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-4">
-            <Card className="w-fit">
-              <CardHeader>
-                <CardTitle className="text-lg">Conta Montepio</CardTitle>
-                <CardDescription>Bank Account</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="leading-7 text-lg">30 000 $</p>
-              </CardContent>
-            </Card>
-            <Card className="w-fit">
-              <CardHeader>
-                <CardTitle className="text-lg">Conta Montepio</CardTitle>
-                <CardDescription>Bank Account</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="leading-7 text-lg">30 000 $</p>
-              </CardContent>
-            </Card>
-            <Card className="w-fit">
-              <CardHeader>
-                <CardTitle className="text-lg">Conta Montepio</CardTitle>
-                <CardDescription>Bank Account</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="leading-7 text-lg">30 000 $</p>
-              </CardContent>
-            </Card>
+            <Account />
+            <Account />
+            <Account />
+            <Account />
+            <Account />
           </div>
         </CardContent>
       </Card>
