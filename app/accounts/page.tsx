@@ -39,27 +39,30 @@ export default function Accounts() {
           <div className="flex flex-wrap gap-4">
             <Card className="w-fit">
               <CardHeader>
-                <CardTitle>Conta Montepio</CardTitle>
-                <CardDescription>Category</CardDescription>
+                <CardTitle className="text-lg">Conta Montepio</CardTitle>
+                <CardDescription>Bank Account</CardDescription>
               </CardHeader>
+              <CardContent>
+                <p className="leading-7 text-lg">30 000 $</p>
+              </CardContent>
             </Card>
             <Card className="w-fit">
               <CardHeader>
-                <CardTitle>Conta Montepio</CardTitle>
-                <CardDescription>Category</CardDescription>
+                <CardTitle className="text-lg">Conta Montepio</CardTitle>
+                <CardDescription>Bank Account</CardDescription>
               </CardHeader>
+              <CardContent>
+                <p className="leading-7 text-lg">30 000 $</p>
+              </CardContent>
             </Card>
             <Card className="w-fit">
               <CardHeader>
-                <CardTitle>Conta Montepio</CardTitle>
-                <CardDescription>Category</CardDescription>
+                <CardTitle className="text-lg">Conta Montepio</CardTitle>
+                <CardDescription>Bank Account</CardDescription>
               </CardHeader>
-            </Card>
-            <Card className="w-fit">
-              <CardHeader>
-                <CardTitle>Conta Montepio</CardTitle>
-                <CardDescription>Category</CardDescription>
-              </CardHeader>
+              <CardContent>
+                <p className="leading-7 text-lg">30 000 $</p>
+              </CardContent>
             </Card>
           </div>
         </CardContent>
