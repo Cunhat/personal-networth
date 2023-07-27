@@ -3,9 +3,9 @@ import * as z from "zod"
 import {auth, currentUser} from "@clerk/nextjs";
 
 
-const postCreateSchema = z.object({
-  title: z.string(),
-  content: z.string().optional(),
+const postCategorySchema = z.object({
+  name: z.string(),
+  type: z.string(),
 })
 
 export async function GET() {
@@ -64,13 +64,10 @@ export async function POST(req: Request) {
     }
 
     const json = await req.json()
+    const body = postCategorySchema.parse(json)
 
     const category = await db.category.create({
-        data: {
-            name: json.name,
-            type: "teste",
-            userId: userDb.id
-        }
+        data: {...body, userId: userDb.id}
     })
   
 
