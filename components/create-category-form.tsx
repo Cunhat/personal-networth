@@ -72,7 +72,7 @@ export const CreateCategory = () => {
           <DialogHeader>
             <DialogTitle>Create a new category</DialogTitle>
             <DialogDescription>
-              Create your new category here. Click save when you're done.
+              Create your new category here. Click save when you are done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
