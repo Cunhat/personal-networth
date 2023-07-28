@@ -1,8 +1,13 @@
 "use client"
 
-import React from "react"
+import React, { use, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
+import { Category } from "@/lib/schemas/category"
+import { postCategorySchema } from "@/lib/validations/category"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -17,16 +22,21 @@ import {
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 
+import { Icons } from "./icons"
 import { Input } from "./ui/input"
 
-export const Categories = () => {
-  //Todo: CHange to react hook form
-  const [newCategoryName, setNewCategoryName] = React.useState<string>("")
-  const [newCategoryType, setNewCategoryType] = React.useState<string>("")
-  const router = useRouter()
+type FormData = z.infer<typeof postCategorySchema>
 
-  const onSubmit = async (data: any) => {
-    // setIsSaving(true)
+export const Categories: React.FC<{ data: Category[] }> = ({ data }) => {
+  const router = useRouter()
+  const { register, handleSubmit, reset } = useForm<FormData>({
+    resolver: zodResolver(postCategorySchema),
+  })
+  const [isSaving, setIsSaving] = React.useState(false)
+  const [open, setOpen] = React.useState(false)
+
+  const onSubmit = async (data: FormData) => {
+    setIsSaving(true)
 
     const response = await fetch(`/api/category`, {
       method: "POST",
@@ -34,12 +44,13 @@ export const Categories = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: newCategoryName,
-        type: newCategoryType,
+        name: data.name,
+        type: data.type,
       }),
     })
 
-    // setIsSaving(false)
+    setIsSaving(false)
+    setOpen(false)
 
     // if (!response?.ok) {
     //   return toast({
@@ -52,60 +63,70 @@ export const Categories = () => {
     router.refresh()
   }
 
+  useEffect(() => {
+    reset()
+  }, [open])
+
   return (
-    <Card className="">
+    <Card>
       <CardHeader>
         <div className="flex justify-between">
           <CardTitle>Categories</CardTitle>
-          <Dialog>
+          <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button>New Category</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Create a new category</DialogTitle>
-                <DialogDescription>
-                  Create your new category here. Click save when you're done.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="name" className="text-right">
-                    Name
-                  </Label>
-                  <Input
-                    id="name"
-                    value={newCategoryName}
-                    className="col-span-3"
-                    onChange={(e) => setNewCategoryName(e.target.value)}
-                  />
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <DialogHeader>
+                  <DialogTitle>Create a new category</DialogTitle>
+                  <DialogDescription>
+                    Create your new category here. Click save when you're done.
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">
+                      Name
+                    </Label>
+                    <Input
+                      id="name"
+                      className="col-span-3"
+                      {...register("name")}
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">
+                      Type
+                    </Label>
+                    <Input
+                      id="type"
+                      className="col-span-3"
+                      {...register("type")}
+                    />
+                  </div>
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="name" className="text-right">
-                    Type
-                  </Label>
-                  <Input
-                    id="name"
-                    value={newCategoryType}
-                    className="col-span-3"
-                    onChange={(e) => setNewCategoryType(e.target.value)}
-                  />
-                </div>
-              </div>
-              <DialogFooter>
-                <Button onClick={() => onSubmit({})} type="submit">
-                  Save changes
-                </Button>
-              </DialogFooter>
+
+                <DialogFooter>
+                  <Button type="submit">
+                    {isSaving && (
+                      <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    )}
+                    Save changes
+                  </Button>
+                </DialogFooter>
+              </form>
             </DialogContent>
           </Dialog>
         </div>
       </CardHeader>
       <CardContent className="flex gap-2 flex-wrap">
-        <Badge variant="secondary">Secondary</Badge>
-        <Badge variant="secondary">Secondary</Badge>
-        <Badge variant="secondary">Secondary</Badge>
-        <Badge variant="secondary">Secondary</Badge>
+        {data?.map((category) => (
+          <Badge key={category.id} variant="secondary">
+            {category.name}
+          </Badge>
+        ))}
       </CardContent>
     </Card>
   )

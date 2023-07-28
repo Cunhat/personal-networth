@@ -8,42 +8,6 @@ const postCategorySchema = z.object({
   type: z.string(),
 })
 
-export async function GET() {
-  try {
-    const user = await currentUser()
-
-    if (!user) {
-      return new Response("Unauthorized", { status: 403 })
-    }
-
-    const userDb = await db.user.findUnique({
-        where: {
-            email: user?.emailAddresses[0].emailAddress ?? ''
-        }
-    })
-
-    if (!userDb) {
-        return new Response("Unauthorized", { status: 403 })
-      }
-
-    const categories = await db.category.findMany({
-        select: {
-            id: true,
-            name: true,
-            userId: true,
-            type: true,
-        },
-        where: {
-            userId: userDb.id
-        }
-    })
-
-    return new Response(JSON.stringify(categories))
-  } catch (error) {
-    return new Response(null, { status: 500 })
-  }
-}
-
 export async function POST(req: Request) {
   try {
    
