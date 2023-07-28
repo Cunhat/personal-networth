@@ -39,7 +39,6 @@ export default async function Accounts() {
         Accounts
       </h2>
       <Categories data={categories} />
-
       <Card className="">
         <CardHeader>
           <div className="flex justify-between">
