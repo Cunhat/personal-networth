@@ -34,14 +34,14 @@ export default async function Accounts() {
   })
 
   return (
-    <main className="flex min-h-screen flex-col p-5 gap-3">
+    <main className="flex h-full flex-col p-5 gap-3">
       <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
         Accounts
       </h2>
       <Categories data={categories} />
       <Card className="">
         <CardHeader>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <CardTitle>Accounts list</CardTitle>
             <Button>Create Account</Button>
           </div>

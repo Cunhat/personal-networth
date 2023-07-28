@@ -34,22 +34,36 @@ model User {
   sessions   Session[]
   accounts   Account[]
   categories Category[]
+  Balance    Balance[]
 
   @@map(name: "users")
 }
 
 model Account {
-  id         String   @id @default(cuid())
-  name       String
-  balance    Float
+  id         String    @id @default(cuid())
+  name       String    @unique
   categoryId String
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Balance    Balance[]
 
   @@index([categoryId])
   @@index([userId])
   @@map(name: "accounts")
+}
+
+model Balance {
+  id        String   @id @default(cuid())
+  balance   Float
+  accountId String
+  account   Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime
+
+  @@index([accountId])
+  @@index([userId])
 }
 
 model Category {

@@ -12,7 +12,7 @@ export const Categories: React.FC<{ data: Category[] }> = ({ data }) => {
   return (
     <Card>
       <CardHeader>
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <CardTitle>Categories</CardTitle>
           <CreateCategory />
         </div>

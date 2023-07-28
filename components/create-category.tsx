@@ -1,11 +1,9 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Label } from "@radix-ui/react-label"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
 
-import { postCategorySchema } from "@/lib/validations/category"
-import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -15,12 +13,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
 
-import { Icons } from "./icons"
+import { Button } from "./ui/button"
 import { Input } from "./ui/input"
-
-type FormData = z.infer<typeof postCategorySchema>
 
 export const CreateCategory = () => {
   const { register, handleSubmit, reset } = useForm<FormData>({
@@ -29,39 +24,6 @@ export const CreateCategory = () => {
   const [isSaving, setIsSaving] = React.useState(false)
   const [open, setOpen] = React.useState(false)
   const router = useRouter()
-
-  const onSubmit = async (data: FormData) => {
-    setIsSaving(true)
-
-    const response = await fetch(`/api/category`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: data.name,
-        type: data.type,
-      }),
-    })
-
-    setIsSaving(false)
-    setOpen(false)
-
-    // if (!response?.ok) {
-    //   return toast({
-    //     title: "Something went wrong.",
-    //     description: "Your post was not saved. Please try again.",
-    //     variant: "destructive",
-    //   })
-    // }
-
-    router.refresh()
-  }
-
-  useEffect(() => {
-    reset()
-  }, [open])
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -90,7 +52,7 @@ export const CreateCategory = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" disabled={isSaving}>
+            <Button type="submit">
               {isSaving && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
