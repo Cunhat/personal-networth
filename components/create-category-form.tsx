@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { postCategorySchema } from "@/lib/validations/category"
+import { PostCategorySchema } from "@/lib/validations/category"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -20,11 +20,11 @@ import { Label } from "@/components/ui/label"
 import { Icons } from "./icons"
 import { Input } from "./ui/input"
 
-type FormData = z.infer<typeof postCategorySchema>
+type FormData = z.infer<typeof PostCategorySchema>
 
 export const CreateCategory = () => {
   const { register, handleSubmit, reset } = useForm<FormData>({
-    resolver: zodResolver(postCategorySchema),
+    resolver: zodResolver(PostCategorySchema),
   })
   const [isSaving, setIsSaving] = React.useState(false)
   const [open, setOpen] = React.useState(false)

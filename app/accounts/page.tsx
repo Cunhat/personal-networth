@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Account } from "@/components/account-component"
 import { Categories } from "@/components/categories-components"
+import { CreateAccount } from "@/components/create-account-form"
 
 export default async function Accounts() {
   const user = await currentUser()
@@ -43,7 +44,7 @@ export default async function Accounts() {
         <CardHeader>
           <div className="flex justify-between items-center">
             <CardTitle>Accounts list</CardTitle>
-            <Button>Create Account</Button>
+            <CreateAccount categories={categories} />
           </div>
         </CardHeader>
         <CardContent>
