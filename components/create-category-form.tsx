@@ -23,7 +23,12 @@ import { Input } from "./ui/input"
 type FormData = z.infer<typeof PostCategorySchema>
 
 export const CreateCategory = () => {
-  const { register, handleSubmit, reset } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: zodResolver(PostCategorySchema),
   })
   const [isSaving, setIsSaving] = React.useState(false)
@@ -80,13 +85,27 @@ export const CreateCategory = () => {
               <Label htmlFor="name" className="text-right">
                 Name
               </Label>
-              <Input id="name" className="col-span-3" {...register("name")} />
+              <div className="col-span-3">
+                <Input id="name" {...register("name")} />
+                {errors?.name && (
+                  <p className="px-1 py-2 text-xs text-red-600">
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">
                 Type
               </Label>
-              <Input id="type" className="col-span-3" {...register("type")} />
+              <div className="col-span-3">
+                <Input id="type" className="col-span-3" {...register("type")} />
+                {errors?.type && (
+                  <p className="px-1 py-2 text-xs text-red-600">
+                    {errors.type.message}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
           <DialogFooter>

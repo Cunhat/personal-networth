@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Label } from "@radix-ui/react-label"
@@ -18,7 +18,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form"
 
 import { Icons } from "./icons"
 import { Button } from "./ui/button"
@@ -63,6 +69,10 @@ export const CreateAccount: React.FC<{ categories: Category[] }> = ({
     router.refresh()
   }
 
+  useEffect(() => {
+    form.reset()
+  }, [open])
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -82,11 +92,18 @@ export const CreateAccount: React.FC<{ categories: Category[] }> = ({
                 <Label htmlFor="name" className="text-right">
                   Name
                 </Label>
-                <Input
-                  id="name"
-                  className="col-span-3"
-                  {...form.register("name")}
-                />
+                <div className="col-span-3">
+                  <Input
+                    id="name"
+                    className="col-span-3"
+                    {...form.register("name")}
+                  />
+                  {form.formState.errors?.name && (
+                    <p className="px-1 py-2 text-xs text-red-600">
+                      {form.formState.errors.name.message}
+                    </p>
+                  )}
+                </div>
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="name" className="text-right">
@@ -114,6 +131,11 @@ export const CreateAccount: React.FC<{ categories: Category[] }> = ({
                           ))}
                         </SelectContent>
                       </Select>
+                      {form.formState.errors?.category && (
+                        <p className="px-1 text-xs text-red-600">
+                          {form.formState.errors.category.message}
+                        </p>
+                      )}
                     </FormItem>
                   )}
                 />
