@@ -34,6 +34,27 @@ export default async function Accounts() {
     },
   })
 
+  const accounts = await db.account.findMany({
+    select: {
+      id: true,
+      name: true,
+      userId: true,
+      categoryId: true,
+      category: {
+        select: {
+          id: true,
+          name: true,
+          type: true,
+        },
+      },
+    },
+    where: {
+      userId: userDb?.id,
+    },
+  })
+
+  console.log(accounts)
+
   return (
     <main className="flex h-full flex-col p-5 gap-3">
       <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
@@ -49,11 +70,9 @@ export default async function Accounts() {
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-4">
-            <Account />
-            <Account />
-            <Account />
-            <Account />
-            <Account />
+            {accounts.map((account) => {
+              return <Account {...account} />
+            })}
           </div>
         </CardContent>
       </Card>
