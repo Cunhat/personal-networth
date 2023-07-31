@@ -38,13 +38,13 @@ export default async function Accounts() {
     select: {
       id: true,
       name: true,
-      userId: true,
       categoryId: true,
       category: {
         select: {
           id: true,
           name: true,
           type: true,
+          userId: true,
         },
       },
     },
