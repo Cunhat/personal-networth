@@ -29,7 +29,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 
 type FormData = z.infer<typeof PostBalanceSchema>
 
-export const AddBalance: React.FC = () => {
+export const AddBalance: React.FC<{ accountId: string }> = ({ accountId }) => {
   const [isSaving, setIsSaving] = React.useState(false)
   const [open, setOpen] = React.useState(false)
   const router = useRouter()
@@ -41,16 +41,19 @@ export const AddBalance: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     setIsSaving(true)
 
-    // const response = await fetch(`/api/account`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     name: data.name,
-    //     category: data.category,
-    //   }),
-    // })
+    console.log(data.createdAt)
+
+    const response = await fetch(`/api/balance`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        balance: data.balance,
+        createdAt: data.createdAt,
+        accountId: accountId,
+      }),
+    })
 
     setIsSaving(false)
     setOpen(false)

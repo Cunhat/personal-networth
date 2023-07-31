@@ -43,7 +43,7 @@ const Account: React.FC<AccountPageProps> = async ({ params }) => {
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
           Balances
         </h4>
-        <AddBalance />
+        <AddBalance accountId={params.accountId} />
       </div>
     </main>
   )
