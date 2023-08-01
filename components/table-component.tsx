@@ -16,6 +16,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table"
 
+import { Icons } from "./icons"
 // import { DataTablePagination } from "../components/data-table-pagination"
 // import { DataTableToolbar } from "../components/data-table-toolbar"
 import {
@@ -30,11 +31,13 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  initialSorting: SortingState
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  initialSorting,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
@@ -42,7 +45,9 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>(
+    initialSorting ?? []
+  )
 
   const table = useReactTable({
     data,
@@ -77,12 +82,28 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                      <div
+                        {...{
+                          onClick: header.column.getCanFilter()
+                            ? header.column.getToggleSortingHandler()
+                            : undefined,
+                          className:
+                            "flex items-center space-x-1 hover:cursor-pointer",
+                        }}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                        {header.column.getCanFilter() &&
+                          {
+                            asc: <Icons.chevronUp className="h-4 w-4" />,
+                            desc: <Icons.chevronDown className="h-4 w-4" />,
+                            false: <Icons.chevronsUpDown className="h-4 w-4" />,
+                          }[header.column.getIsSorted() as string]}
+                      </div>
                     </TableHead>
                   )
                 })}

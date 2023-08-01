@@ -30,7 +30,13 @@ const Account: React.FC<AccountPageProps> = async ({ params }) => {
     },
   })
 
-  console.log(account)
+  const initialSorting = [
+    {
+      id: "createdAt",
+      desc: true,
+    },
+  ]
+
   return (
     <main className="flex h-full flex-col p-5 gap-3">
       <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
@@ -42,7 +48,11 @@ const Account: React.FC<AccountPageProps> = async ({ params }) => {
         </h4>
         <AddBalance accountId={params.accountId} />
       </div>
-      <DataTable data={account?.Balance ?? []} columns={columns} />
+      <DataTable
+        data={account?.Balance ?? []}
+        columns={columns}
+        initialSorting={initialSorting}
+      />
     </main>
   )
 }

@@ -10,7 +10,7 @@ export const columns: ColumnDef<any>[] = [
     cell: ({ row }) => (
       <div className="w-[80px]">{row.getValue("balance")}</div>
     ),
-    enableSorting: false,
+    enableSorting: true,
   },
   {
     accessorKey: "createdAt",
