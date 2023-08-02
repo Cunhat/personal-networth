@@ -34,7 +34,7 @@ model User {
   sessions   Session[]
   accounts   Account[]
   categories Category[]
-  Balance    Balance[]
+  balance    Balance[]
 
   @@map(name: "users")
 }
@@ -46,7 +46,7 @@ model Account {
   category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   userId     String
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Balance    Balance[]
+  balance    Balance[]
 
   @@index([categoryId])
   @@index([userId])

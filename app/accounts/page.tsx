@@ -47,13 +47,18 @@ export default async function Accounts() {
           userId: true,
         },
       },
+      balance: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
     },
     where: {
       userId: userDb?.id,
     },
   })
 
-  console.log(accounts)
+  console.log(accounts[0].balance)
 
   return (
     <main className="flex h-full flex-col p-5 gap-3">
@@ -71,6 +76,8 @@ export default async function Accounts() {
         <CardContent>
           <div className="flex flex-wrap gap-4">
             {accounts.map((account) => {
+              console.log("for: ", account)
+
               return <Account {...account} />
             })}
           </div>

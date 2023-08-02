@@ -32,8 +32,6 @@ export async function POST(req: Request) {
     
     const body = PostAccountSchema.parse(json)
 
-   
-
     const balance = await db.balance.create({
         data: {balance: body.balance, createdAt: body.createdAt, accountId: body.accountId, userId: userDb.id}
     })

@@ -23,7 +23,7 @@ const Account: React.FC<AccountPageProps> = async ({ params }) => {
           userId: true,
         },
       },
-      Balance: true,
+      balance: true,
     },
     where: {
       id: params.accountId,
@@ -48,8 +48,11 @@ const Account: React.FC<AccountPageProps> = async ({ params }) => {
         </h4>
         <AddBalance accountId={params.accountId} />
       </div>
+      <p className="text-muted-foreground">
+        Here&apos;s a list of your balances for the latest months!
+      </p>
       <DataTable
-        data={account?.Balance ?? []}
+        data={account?.balance ?? []}
         columns={columns}
         initialSorting={initialSorting}
       />

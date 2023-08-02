@@ -14,6 +14,7 @@ export const Account: React.FC<Omit<AccountType, "userId">> = ({
   name,
   category,
   id,
+  balance,
 }) => {
   return (
     <Link href={`/accounts/${id}`}>
@@ -23,7 +24,7 @@ export const Account: React.FC<Omit<AccountType, "userId">> = ({
           <CardDescription>{category.name}</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="leading-7 text-lg">30 000 $</p>
+          <p className="leading-7 text-lg">{balance[0]?.balance ?? 0} €</p>
         </CardContent>
       </Card>
     </Link>

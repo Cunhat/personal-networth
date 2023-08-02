@@ -87,8 +87,9 @@ export function DataTable<TData, TValue>({
                           onClick: header.column.getCanFilter()
                             ? header.column.getToggleSortingHandler()
                             : undefined,
-                          className:
-                            "flex items-center space-x-1 hover:cursor-pointer",
+                          className: header.column.getCanSort()
+                            ? "flex items-center space-x-1 hover:cursor-pointer"
+                            : "flex items-center space-x-1 ",
                         }}
                       >
                         {header.isPlaceholder
