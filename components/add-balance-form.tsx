@@ -41,8 +41,6 @@ export const AddBalance: React.FC<{ accountId: string }> = ({ accountId }) => {
   const onSubmit = async (data: FormData) => {
     setIsSaving(true)
 
-    console.log(data.createdAt)
-
     const response = await fetch(`/api/balance`, {
       method: "POST",
       headers: {

@@ -54,11 +54,11 @@ export const Networth: React.FC = async () => {
     },
   })
 
-  console.log(categories)
+  console.log(accounts)
 
-  const networth = accounts
+  const netWorth = accounts
     .reduce((acc, account) => {
-      return acc + account.balance[0]?.balance ?? 0
+      return acc + (account?.balance[0] ? account.balance[0]?.balance : 0)
     }, 0)
     .toFixed(2)
 
@@ -70,9 +70,9 @@ export const Networth: React.FC = async () => {
       <CardContent className="gap-6 flex flex-col">
         <div className="flex justify-between items-center">
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-            Networth
+            Net worth
           </h4>
-          <p>{networth} €</p>
+          <p>{new Intl.NumberFormat().format(netWorth)} €</p>
         </div>
         <div className="flex flex-col gap-4">
           {categories.map((category, index) => {
@@ -86,7 +86,12 @@ export const Networth: React.FC = async () => {
                     return (
                       <div className="flex justify-between items-center">
                         <p>{account.name}</p>
-                        <p>{account.balance[0]?.balance ?? 0} €</p>
+                        <p>
+                          {new Intl.NumberFormat().format(
+                            account.balance[0]?.balance ?? 0
+                          )}{" "}
+                          €
+                        </p>
                       </div>
                     )
                   }

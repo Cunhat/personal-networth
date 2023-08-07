@@ -7,7 +7,7 @@ export default function Home() {
       <div className="col-span-1 flex-1 pb-6">
         <Networth />
       </div>
-      <div className="bg-pink-500 flex-1">ssss</div>
+      <div className=" flex-1">ssss</div>
     </div>
   )
 }
