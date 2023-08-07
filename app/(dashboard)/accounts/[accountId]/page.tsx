@@ -1,7 +1,7 @@
 import React from "react"
 
 import { db } from "@/lib/db"
-import { columns } from "@/components/accounts/table-columns"
+import { columns } from "@/components/account/table-columns"
 import { AddBalance } from "@/components/add-balance-form"
 import { DataTable } from "@/components/table-component"
 
@@ -38,7 +38,7 @@ const Account: React.FC<AccountPageProps> = async ({ params }) => {
   ]
 
   return (
-    <main className="flex h-full flex-col p-5 gap-3">
+    <main className="flex h-full flex-col gap-3">
       <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
         {account?.name} - {account?.category.name}
       </h2>

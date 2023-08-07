@@ -6,6 +6,7 @@ import "./globals.css"
 
 import Link from "next/link"
 
+import { cn } from "@/lib/utils"
 import { Navbar } from "@/components/navbar"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -23,8 +24,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
-          <Navbar />
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            inter.className
+          )}
+        >
           {children}
         </body>
       </html>

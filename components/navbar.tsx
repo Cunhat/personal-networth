@@ -21,7 +21,7 @@ export const Navbar = () => {
   const pathName = usePathname()
 
   return (
-    <nav className="bg-white border-b space-x-4 flex items-center h-16 pl-4">
+    <nav className="bg-white space-x-4 flex items-center h-16 pl-4">
       <Link href="/" className={NavItem({ active: pathName === "/" })}>
         Overview
       </Link>

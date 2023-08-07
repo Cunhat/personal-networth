@@ -26,16 +26,16 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
-import { Icons } from "./icons"
-import { Button } from "./ui/button"
-import { Input } from "./ui/input"
+import { Icons } from "../icons"
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select"
+} from "../ui/select"
 
 type FormData = z.infer<typeof PostAccountSchema>
 

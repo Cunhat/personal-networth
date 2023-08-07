@@ -5,9 +5,9 @@ import { auth, currentUser } from "@clerk/nextjs"
 import { db } from "@/lib/db"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Account } from "@/components/account-component"
+import { Account } from "@/components/account/account-component"
+import { CreateAccount } from "@/components/account/create-account-form"
 import { Categories } from "@/components/categories-components"
-import { CreateAccount } from "@/components/create-account-form"
 
 export default async function Accounts() {
   const user = await currentUser()
@@ -58,10 +58,8 @@ export default async function Accounts() {
     },
   })
 
-  console.log(accounts[0].balance)
-
   return (
-    <main className="flex h-full flex-col p-5 gap-3">
+    <main className="flex h-full flex-col gap-3">
       <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
         Accounts
       </h2>
