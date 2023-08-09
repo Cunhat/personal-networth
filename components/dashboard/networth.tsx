@@ -1,61 +1,18 @@
 import React from "react"
-import { redirect } from "next/navigation"
-import { currentUser } from "@clerk/nextjs"
 
-import { db } from "@/lib/db"
+import { Account } from "@/lib/schemas/account"
+import { Category } from "@/lib/schemas/category"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export const Networth: React.FC = async () => {
-  const user = await currentUser()
+type NetWorthProps = {
+  accounts: Account[]
+  categories: Category[]
+}
 
-  if (!user) {
-    redirect("/sign-in")
-  }
-
-  const userDb = await db.user.findUnique({
-    where: {
-      email: user?.emailAddresses[0].emailAddress ?? "",
-    },
-  })
-
-  const accounts = await db.account.findMany({
-    select: {
-      id: true,
-      name: true,
-      categoryId: true,
-      category: {
-        select: {
-          id: true,
-          name: true,
-          type: true,
-          userId: true,
-        },
-      },
-      balance: {
-        orderBy: {
-          createdAt: "desc",
-        },
-      },
-    },
-    where: {
-      userId: userDb?.id,
-    },
-  })
-
-  const categories = await db.category.findMany({
-    select: {
-      id: true,
-      name: true,
-      userId: true,
-      type: true,
-    },
-    where: {
-      userId: userDb?.id,
-    },
-  })
-
-  console.log(accounts)
-
+export const Networth: React.FC<NetWorthProps> = async ({
+  accounts,
+  categories,
+}) => {
   const netWorth = accounts
     .reduce((acc, account) => {
       return acc + (account?.balance[0] ? account.balance[0]?.balance : 0)
@@ -84,7 +41,10 @@ export const Networth: React.FC = async () => {
                 {accounts.map((account) => {
                   if (account.categoryId === category.id) {
                     return (
-                      <div className="flex justify-between items-center">
+                      <div
+                        className="flex justify-between items-center"
+                        key={account.id}
+                      >
                         <p>{account.name}</p>
                         <p>
                           {new Intl.NumberFormat().format(

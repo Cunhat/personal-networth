@@ -74,9 +74,7 @@ export default async function Accounts() {
         <CardContent>
           <div className="flex flex-wrap gap-4">
             {accounts.map((account) => {
-              console.log("for: ", account)
-
-              return <Account {...account} />
+              return <Account {...account} key={account.id} />
             })}
           </div>
         </CardContent>
