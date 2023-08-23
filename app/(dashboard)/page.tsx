@@ -57,8 +57,8 @@ export default async function Home() {
   })
 
   return (
-    <div className="grid flex-1 gap-8 md:grid-cols-[250px_1fr]">
-      <div className="col-span-1 flex-1 pb-6">
+    <div className="grid flex-1 gap-8 md:grid-cols-[300px_1fr]">
+      <div className="flex-1 pb-6">
         <Networth accounts={accounts} categories={categories} />
       </div>
       <div className="flex-1 overflow-auto">
