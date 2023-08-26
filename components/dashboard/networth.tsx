@@ -18,7 +18,8 @@ export const Networth: React.FC<NetWorthProps> = async ({
       return acc + (account?.balance[0] ? account.balance[0]?.balance : 0)
     }, 0)
     .toFixed(2)
-
+  //  @ts-ignore
+  const teste = new Intl.NumberFormat().format(netWorth)
   return (
     <Card className="h-full">
       <CardHeader>
@@ -29,7 +30,7 @@ export const Networth: React.FC<NetWorthProps> = async ({
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
             Net worth
           </h4>
-          <p>{new Intl.NumberFormat().format(netWorth)} €</p>
+          <p>{teste} €</p>
         </div>
         <div className="flex flex-col gap-4">
           {categories.map((category, index) => {

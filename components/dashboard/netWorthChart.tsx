@@ -1,9 +1,6 @@
 "use client"
 
-import { type } from "os"
-import { start } from "repl"
 import React from "react"
-import { Coming_Soon } from "next/font/google"
 import { ResponsiveLine } from "@nivo/line"
 import dayjs from "dayjs"
 
