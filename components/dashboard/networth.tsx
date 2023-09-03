@@ -9,7 +9,7 @@ type NetWorthProps = {
   categories: Category[]
 }
 
-export const Networth: React.FC<NetWorthProps> = async ({
+export const NetWorth: React.FC<NetWorthProps> = async ({
   accounts,
   categories,
 }) => {
@@ -19,7 +19,7 @@ export const Networth: React.FC<NetWorthProps> = async ({
     }, 0)
     .toFixed(2)
   //  @ts-ignore
-  const teste = new Intl.NumberFormat().format(netWorth)
+  const formattedNetWorthValue = new Intl.NumberFormat().format(netWorth)
   return (
     <Card className="h-full">
       <CardHeader>
@@ -30,7 +30,7 @@ export const Networth: React.FC<NetWorthProps> = async ({
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
             Net worth
           </h4>
-          <p>{teste} €</p>
+          <p>{formattedNetWorthValue} €</p>
         </div>
         <div className="flex flex-col gap-4">
           {categories.map((category, index) => {

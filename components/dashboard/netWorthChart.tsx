@@ -89,43 +89,49 @@ export const NetWorthChart: React.FC<NetWorthChartProps> = ({ accounts }) => {
         <CardTitle>Net Worth Chart</CardTitle>
       </CardHeader>
       <CardContent className="flex-1">
-        <ResponsiveLine
-          data={data}
-          margin={{ top: 30, right: 30, bottom: 30, left: 50 }}
-          xScale={{ type: "point" }}
-          yScale={{
-            type: "linear",
-            min: "auto",
-            max: "auto",
-            stacked: true,
-            reverse: false,
-          }}
-          yFormat=" >-.2f"
-          curve="cardinal"
-          axisTop={null}
-          lineWidth={3}
-          colors={{ scheme: "set3" }}
-          axisRight={null}
-          axisBottom={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legendOffset: 36,
-            legendPosition: "middle",
-          }}
-          axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legendOffset: -40,
-            legendPosition: "middle",
-          }}
-          pointSize={10}
-          pointBorderWidth={2}
-          pointBorderColor={{ from: "serie.color" }}
-          pointLabelYOffset={-12}
-          useMesh={true}
-        />
+        {data[0]?.data.length > 0 ? (
+          <ResponsiveLine
+            data={data}
+            margin={{ top: 30, right: 30, bottom: 30, left: 50 }}
+            xScale={{ type: "point" }}
+            yScale={{
+              type: "linear",
+              min: "auto",
+              max: "auto",
+              stacked: true,
+              reverse: false,
+            }}
+            yFormat=" >-.2f"
+            curve="cardinal"
+            axisTop={null}
+            lineWidth={3}
+            colors={{ scheme: "set3" }}
+            axisRight={null}
+            axisBottom={{
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legendOffset: 36,
+              legendPosition: "middle",
+            }}
+            axisLeft={{
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legendOffset: -40,
+              legendPosition: "middle",
+            }}
+            pointSize={10}
+            pointBorderWidth={2}
+            pointBorderColor={{ from: "serie.color" }}
+            pointLabelYOffset={-12}
+            useMesh={true}
+          />
+        ) : (
+          <div className="flex justify-center items-center h-full">
+            <p>No data to be displayed..</p>
+          </div>
+        )}
       </CardContent>
     </Card>
   )

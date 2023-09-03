@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 
 import { db } from "@/lib/db"
-import { Networth } from "@/components/dashboard/networth"
+import { NetWorth } from "@/components/dashboard/networth"
 import { NetWorthChart } from "@/components/dashboard/netWorthChart"
 
 export default async function Home() {
@@ -58,7 +58,7 @@ export default async function Home() {
   return (
     <div className="grid flex-1 gap-8 md:grid-cols-[300px_1fr]">
       <div className="flex-1 pb-6">
-        <Networth accounts={accounts} categories={categories} />
+        <NetWorth accounts={accounts} categories={categories} />
       </div>
       <div className="flex-1 overflow-auto">
         <NetWorthChart accounts={accounts} />
