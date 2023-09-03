@@ -5,10 +5,14 @@ import React from "react"
 import { Category } from "@/lib/schemas/category"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { trpc } from "@/app/api/_trpc/client"
 
 import { CreateCategory } from "./create-category-form"
 
 export const Categories: React.FC<{ data: Category[] }> = ({ data }) => {
+  const teste = trpc.getTodos.useQuery()
+
+  console.log(teste)
   return (
     <Card>
       <CardHeader>

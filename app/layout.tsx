@@ -9,6 +9,8 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Navbar } from "@/components/navbar"
 
+import Provider from "./api/_trpc/provider"
+
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
@@ -22,7 +24,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
+    // <ClerkProvider>
+    <Provider>
       <html lang="en">
         <body
           className={cn(
@@ -33,6 +36,7 @@ export default function RootLayout({
           {children}
         </body>
       </html>
-    </ClerkProvider>
+    </Provider>
+    // </ClerkProvider>
   )
 }
