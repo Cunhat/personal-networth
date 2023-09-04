@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 
 import { db } from "@/lib/db"
+import { Card, CardContent } from "@/components/ui/card"
 import { NetWorth } from "@/components/dashboard/networth"
 import { NetWorthChart } from "@/components/dashboard/netWorthChart"
 
@@ -60,8 +61,40 @@ export default async function Home() {
       <div className="flex-1 pb-6">
         <NetWorth accounts={accounts} categories={categories} />
       </div>
-      <div className="flex-1 overflow-auto">
+      <div className="flex flex-col flex-1 overflow-auto gap-3">
         <NetWorthChart accounts={accounts} />
+        <div className="flex gap-3 flex-wrap lg:justify-between justify-normal">
+          <Card className="flex flex-col md:w-fit w-full">
+            <div className="flex flex-col gap-1 p-4">
+              <p className="text-muted-foreground">Total net money</p>
+              <h2 className="text-xl font-semibold tracking-tight">40 000 $</h2>
+            </div>
+          </Card>
+          <Card className="flex flex-col md:w-fit w-full">
+            <div className="flex flex-col gap-1 p-4">
+              <p className="text-muted-foreground">Total invested money</p>
+              <h2 className="text-xl font-semibold tracking-tight">40 000 $</h2>
+            </div>
+          </Card>
+          <Card className="flex flex-col md:w-fit w-full">
+            <div className="flex flex-col gap-1 p-4">
+              <p className="text-muted-foreground">Total crypto money</p>
+              <h2 className="text-xl font-semibold tracking-tight">40 000 $</h2>
+            </div>
+          </Card>
+          <Card className="flex flex-col md:w-fit w-full">
+            <div className="flex flex-col gap-1 p-4">
+              <p className="text-muted-foreground">Net money + crypto money</p>
+              <h2 className="text-xl font-semibold tracking-tight">40 000 $</h2>
+            </div>
+          </Card>
+          <Card className="flex flex-col md:w-fit w-full">
+            <div className="flex flex-col gap-1 p-4">
+              <p className="text-muted-foreground">Invested this year</p>
+              <h2 className="text-xl font-semibold tracking-tight">40 000 $</h2>
+            </div>
+          </Card>
+        </div>
       </div>
     </div>
   )

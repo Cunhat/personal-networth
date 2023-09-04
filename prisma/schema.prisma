@@ -35,6 +35,8 @@ model User {
   accounts   Account[]
   categories Category[]
   balance    Balance[]
+  tag        Tag[]
+  widget     Widget[]
 
   @@map(name: "users")
 }
@@ -77,4 +79,29 @@ model Category {
 
   @@index([userId])
   @@map(name: "categories")
+}
+
+model Tag {
+  id   String @id @default(cuid())
+  name String
+
+  userId   String
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Widget   Widget? @relation(fields: [widgetId], references: [id])
+  widgetId String?
+
+  @@index([userId])
+  @@index([widgetId])
+  @@map(name: "tags")
+}
+
+model Widget {
+  id     String @id @default(cuid())
+  title  String
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tag    Tag[]
+
+  @@index([userId])
+  @@map(name: "widget")
 }
