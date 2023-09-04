@@ -49,6 +49,7 @@ model Account {
   userId     String
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   balance    Balance[]
+  tag        Tag[]
 
   @@index([categoryId])
   @@index([userId])
@@ -85,13 +86,16 @@ model Tag {
   id   String @id @default(cuid())
   name String
 
-  userId   String
-  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Widget   Widget? @relation(fields: [widgetId], references: [id])
-  widgetId String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Widget    Widget?  @relation(fields: [widgetId], references: [id])
+  widgetId  String?
+  Account   Account? @relation(fields: [accountId], references: [id])
+  accountId String?
 
   @@index([userId])
   @@index([widgetId])
+  @@index([accountId])
   @@map(name: "tags")
 }
 
