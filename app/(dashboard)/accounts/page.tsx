@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Account } from "@/components/account/account-component"
 import { CreateAccount } from "@/components/account/create-account-form"
 import { Categories } from "@/components/categories-components"
+import { Tags } from "@/components/tag-component"
 
 export default async function Accounts() {
   const user = await currentUser()
@@ -64,6 +65,7 @@ export default async function Accounts() {
         Accounts
       </h2>
       <Categories data={categories} />
+      <Tags data={[]} />
       <Card className="">
         <CardHeader>
           <div className="flex justify-between items-center">

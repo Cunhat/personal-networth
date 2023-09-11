@@ -1,12 +1,9 @@
 import { db } from "@/lib/db"
 import * as z from "zod"
 import {auth, currentUser} from "@clerk/nextjs";
+import { PostTagSchema } from "@/lib/validations/tag";
 
 
-const postCategorySchema = z.object({
-  name: z.string(),
-  type: z.string(),
-})
 
 export async function POST(req: Request) {
   try {
@@ -28,9 +25,9 @@ export async function POST(req: Request) {
     }
 
     const json = await req.json()
-    const body = postCategorySchema.parse(json)
+    const body = PostTagSchema.parse(json)
 
-    const category = await db.category.create({
+    const category = await db.tag.create({
         data: {...body, userId: userDb.id}
     })
   
