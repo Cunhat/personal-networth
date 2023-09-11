@@ -20,11 +20,11 @@ export const Tags: React.FC<{ data: Tag[] }> = ({ data }) => {
         </div>
       </CardHeader>
       <CardContent className="flex gap-2 flex-wrap">
-        {/* {data?.map((category) => (
-          <Badge key={category.id} variant="secondary">
-            {category.name}
+        {data?.map((tag) => (
+          <Badge key={tag.id} variant="secondary">
+            {tag.name}
           </Badge>
-        ))} */}
+        ))}
       </CardContent>
     </Card>
   )

@@ -35,6 +35,17 @@ export default async function Accounts() {
     },
   })
 
+  const tags = await db.tag.findMany({
+    select: {
+      id: true,
+      name: true,
+      userId: true,
+    },
+    where: {
+      userId: userDb?.id,
+    },
+  })
+
   const accounts = await db.account.findMany({
     select: {
       id: true,
@@ -65,7 +76,7 @@ export default async function Accounts() {
         Accounts
       </h2>
       <Categories data={categories} />
-      <Tags data={[]} />
+      <Tags data={tags} />
       <Card className="">
         <CardHeader>
           <div className="flex justify-between items-center">
