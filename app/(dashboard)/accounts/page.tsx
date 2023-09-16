@@ -81,7 +81,7 @@ export default async function Accounts() {
         <CardHeader>
           <div className="flex justify-between items-center">
             <CardTitle>Accounts list</CardTitle>
-            <CreateAccount categories={categories} />
+            <CreateAccount categories={categories} tags={tags} />
           </div>
         </CardHeader>
         <CardContent>

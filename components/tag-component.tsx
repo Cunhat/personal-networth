@@ -2,7 +2,6 @@
 
 import React from "react"
 
-import { Category } from "@/lib/schemas/category"
 import { Tag } from "@/lib/schemas/tags"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"

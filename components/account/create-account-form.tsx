@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 
 import { Category } from "@/lib/schemas/category"
+import { Tag } from "@/lib/schemas/tags"
 import { PostAccountSchema } from "@/lib/validations/accounts"
 import {
   Dialog,
@@ -39,9 +40,10 @@ import {
 
 type FormData = z.infer<typeof PostAccountSchema>
 
-export const CreateAccount: React.FC<{ categories: Category[] }> = ({
-  categories,
-}) => {
+export const CreateAccount: React.FC<{
+  categories: Category[]
+  tags: Tag[]
+}> = ({ categories, tags }) => {
   const form = useForm<FormData>({
     resolver: zodResolver(PostAccountSchema),
   })
@@ -60,6 +62,7 @@ export const CreateAccount: React.FC<{ categories: Category[] }> = ({
       body: JSON.stringify({
         name: data.name,
         category: data.category,
+        tag: data.tag,
       }),
     })
 
@@ -136,6 +139,41 @@ export const CreateAccount: React.FC<{ categories: Category[] }> = ({
                           {form.formState.errors.category.message}
                         </p>
                       )}
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Tag
+                </Label>
+                <FormField
+                  control={form.control}
+                  name="tag"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="w-[280px]">
+                            <SelectValue placeholder="Select a tag" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {tags?.map((tag) => (
+                            <SelectItem value={tag.id} key={tag.id}>
+                              {tag.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {/* {form.formState.errors?.category && (
+                        <p className="px-1 text-xs text-red-600">
+                          {form.formState.errors.tag.message}
+                        </p>
+                      )} */}
                     </FormItem>
                   )}
                 />

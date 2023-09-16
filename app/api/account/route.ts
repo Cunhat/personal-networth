@@ -6,6 +6,7 @@ import {currentUser} from "@clerk/nextjs";
 const PostAccountSchema = z.object({
   name: z.string(),
   category: z.string(),
+  tag: z.string().optional(),
 })
 
 export async function POST(req: Request) {
@@ -29,17 +30,39 @@ export async function POST(req: Request) {
 
     const json = await req.json()
     const body = PostAccountSchema.parse(json)
+    let account
 
-    const category = await db.account.create({
-        data: {name: body.name, categoryId: body.category, userId: userDb.id}
-    })
-  
+    if(body.tag === undefined) {
+        account = await db.account.create({
+            data: {name: body.name, categoryId: body.category, userId: userDb.id}
+        })
+        return new Response(JSON.stringify(account))
+    } else {
+        account = await db.account.create({
+          data: {name: body.name, categoryId: body.category, userId: userDb.id, tags: {
+              create: [
+                {
+                  assignedAt: new Date(),
+                  assignedBy: userDb.id,
+                  tag:{
+                    connect: {
+                      id: body.tag
+                    }
+                  }
+                }
+              ]
+          }}
+      })
+    }
 
-    return new Response(JSON.stringify(category))
+    return new Response(JSON.stringify(account))
+    
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
+
+    console.log(error)
 
     return new Response(null, { status: 500 })
   }
