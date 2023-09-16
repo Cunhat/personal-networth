@@ -12,6 +12,19 @@ export const AccountSchema = z.object({
       balance: z.number(),
       createdAt: z.date(),
     })),
+    tags: z.array(z.object({
+      tagId: z.string(),
+      accountId: z.string(),
+      assignedAt: z.date(),
+      assignedBy: z.string(),
+      tag: z.object({
+        id: z.string(),
+        name: z.string(),
+        userId: z.string(),
+        widgetId: z.string().nullable(),
+      }),
+    })).optional(),
   })
   
  export type Account = z.infer<typeof AccountSchema> 
+

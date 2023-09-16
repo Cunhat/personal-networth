@@ -10,21 +10,33 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+import { Badge } from "../ui/badge"
+
 export const Account: React.FC<Omit<AccountType, "userId">> = ({
   name,
   category,
   id,
   balance,
+  tags,
 }) => {
+  console.log("tags", tags)
+
   return (
     <Link href={`/accounts/${id}`}>
-      <Card className="w-fit">
+      <Card className="w-fit min-w-[200px]">
         <CardHeader>
           <CardTitle className="text-lg">{name}</CardTitle>
           <CardDescription>{category.name}</CardDescription>
+          {tags?.map((tag) => (
+            <Badge key={tag.tag.id} variant="secondary" className="w-fit">
+              {tag.tag.name}
+            </Badge>
+          ))}
         </CardHeader>
         <CardContent>
-          <p className="leading-7 text-lg">{balance[0]?.balance ?? 0} €</p>
+          <p className="leading-7 text-lg text-end">
+            {balance[0]?.balance ?? 0} €
+          </p>
         </CardContent>
       </Card>
     </Link>

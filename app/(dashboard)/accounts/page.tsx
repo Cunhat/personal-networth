@@ -47,23 +47,14 @@ export default async function Accounts() {
   })
 
   const accounts = await db.account.findMany({
-    select: {
-      id: true,
-      name: true,
-      categoryId: true,
-      category: {
-        select: {
-          id: true,
-          name: true,
-          type: true,
-          userId: true,
+    include: {
+      tags: {
+        include: {
+          tag: true,
         },
       },
-      balance: {
-        orderBy: {
-          createdAt: "desc",
-        },
-      },
+      category: true,
+      balance: true,
     },
     where: {
       userId: userDb?.id,
