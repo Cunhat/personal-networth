@@ -35,7 +35,7 @@ export const Account: React.FC<Omit<AccountType, "userId">> = ({
         </CardHeader>
         <CardContent>
           <p className="leading-7 text-lg text-end">
-            {balance[0]?.balance ?? 0} €
+            {Intl.NumberFormat().format(balance[0]?.balance ?? 0)} €
           </p>
         </CardContent>
       </Card>
