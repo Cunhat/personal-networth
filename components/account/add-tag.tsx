@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -8,11 +9,13 @@ import { z } from "zod"
 import { Tag } from "@/lib/schemas/tags"
 import { PostTagSchema } from "@/lib/validations/tag"
 
+import { Icons } from "../icons"
 import { Button } from "../ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -29,16 +32,37 @@ import {
 
 type AddTagProps = {
   data: Array<Tag>
+  accountId: string
 }
 type FormData = z.infer<typeof PostTagSchema>
 
-export const AddTag: React.FC<AddTagProps> = ({ data }) => {
+export const AddTag: React.FC<AddTagProps> = ({ data, accountId }) => {
   const [open, setOpen] = React.useState(false)
   const form = useForm<FormData>({
     resolver: zodResolver(PostTagSchema),
   })
+  const [isSaving, setIsSaving] = React.useState(false)
+  const router = useRouter()
 
-  const onSubmit = () => {}
+  const onSubmit = async (data: FormData) => {
+    setIsSaving(true)
+
+    const response = await fetch(`/api/account/addTag`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tag: data.name,
+        accountId: accountId,
+      }),
+    })
+
+    setIsSaving(false)
+    setOpen(false)
+    form.reset()
+    router.refresh()
+  }
 
   useEffect(() => {
     form.reset()
@@ -96,6 +120,14 @@ export const AddTag: React.FC<AddTagProps> = ({ data }) => {
                 />
               </div>
             </div>
+            <DialogFooter>
+              <Button type="submit" disabled={isSaving}>
+                {isSaving && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Save changes
+              </Button>
+            </DialogFooter>
           </form>
         </Form>
       </DialogContent>

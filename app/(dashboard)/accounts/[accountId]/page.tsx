@@ -34,8 +34,6 @@ const Account: React.FC<AccountPageProps> = async ({ params }) => {
     (tag) => !account?.tags?.some((accountTag) => tag.id === accountTag.tag.id)
   )
 
-  console.log(filteredTags)
-
   const initialSorting = [
     {
       id: "createdAt",
@@ -66,7 +64,7 @@ const Account: React.FC<AccountPageProps> = async ({ params }) => {
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
           Tags
         </h4>
-        <AddTag data={filteredTags} />
+        <AddTag data={filteredTags} accountId={params.accountId} />
       </div>
       <div className="flex flex-wrap gap-4">
         {account?.tags?.map((tag) => (
