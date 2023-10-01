@@ -21,7 +21,6 @@ export const AccountSchema = z.object({
         id: z.string(),
         name: z.string(),
         userId: z.string(),
-        widgetId: z.string().nullable(),
       }),
     })).optional(),
   })

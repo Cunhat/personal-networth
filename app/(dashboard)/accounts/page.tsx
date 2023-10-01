@@ -3,10 +3,10 @@ import { useUser } from "@clerk/clerk-react"
 import { auth, currentUser } from "@clerk/nextjs"
 
 import { db } from "@/lib/db"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Account } from "@/components/account/account-component"
 import { CreateAccount } from "@/components/account/create-account-form"
+import { Widgets } from "@/components/account/widgets"
 import { Categories } from "@/components/categories-components"
 import { Tags } from "@/components/tag-component"
 
@@ -83,6 +83,7 @@ export default async function Accounts() {
           </div>
         </CardContent>
       </Card>
+      <Widgets />
     </main>
   )
 }

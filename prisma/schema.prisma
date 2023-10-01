@@ -84,18 +84,14 @@ model Category {
 }
 
 model Tag {
-  id   String @id @default(cuid())
-  name String
-
-  userId   String
-  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Widget   Widget? @relation(fields: [widgetId], references: [id])
-  widgetId String?
-
-  accounts AccountsOnTags[]
+  id            String           @id @default(cuid())
+  name          String
+  userId        String
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accounts      AccountsOnTags[]
+  widgetsOnTags WidgetsOnTags[]
 
   @@index([userId])
-  @@index([widgetId])
   @@map(name: "tags")
 }
 
@@ -113,12 +109,23 @@ model AccountsOnTags {
 }
 
 model Widget {
-  id     String @id @default(cuid())
-  title  String
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tag    Tag[]
+  id            String          @id @default(cuid())
+  title         String
+  userId        String
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  widgetsOnTags WidgetsOnTags[]
 
   @@index([userId])
   @@map(name: "widget")
+}
+
+model WidgetsOnTags {
+  widgetId String
+  widget   Widget @relation(fields: [widgetId], references: [id])
+  tagId    String
+  tag      Tag    @relation(fields: [tagId], references: [id])
+
+  @@id([widgetId, tagId])
+  @@index([widgetId])
+  @@index([tagId])
 }
