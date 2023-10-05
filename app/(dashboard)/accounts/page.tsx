@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation"
-import { useUser } from "@clerk/clerk-react"
-import { auth, currentUser } from "@clerk/nextjs"
+import { currentUser } from "@clerk/nextjs"
 
 import { db } from "@/lib/db"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"

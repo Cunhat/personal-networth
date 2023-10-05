@@ -7,6 +7,7 @@ import { Dialog } from "@radix-ui/react-dialog"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { Tag } from "@/lib/schemas/tags"
 import { PostWidgetSchema } from "@/lib/validations/widgets"
 
 import { Icons } from "../icons"
@@ -21,10 +22,15 @@ import {
 } from "../ui/dialog"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
+import { MultiSelect } from "../ui/multi-select"
 
 type FormData = z.infer<typeof PostWidgetSchema>
 
-export const CreateWidget = () => {
+type CreateWidgetProps = {
+  tags: Array<Tag>
+}
+
+export const CreateWidget: React.FC<CreateWidgetProps> = ({ tags }) => {
   const [open, setOpen] = React.useState(false)
   const [isSaving, setIsSaving] = React.useState(false)
   const form = useForm<FormData>({
@@ -85,7 +91,16 @@ export const CreateWidget = () => {
                 )}
               </div>
             </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Tags
+              </Label>
+              <div className="col-span-3">
+                <MultiSelect data={tags} />
+              </div>
+            </div>
           </div>
+
           <DialogFooter>
             <Button type="submit" disabled={isSaving}>
               {isSaving && (
