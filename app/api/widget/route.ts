@@ -1,15 +1,14 @@
 import { db } from "@/lib/db"
 import * as z from "zod"
-import {currentUser} from "@clerk/nextjs";
+import {auth, currentUser} from "@clerk/nextjs";
+ import { PostWidgetSchema } from "@/lib/validations/widgets"
 
 
-const PostAccountSchema = z.object({
-  accountId: z.string(),
-  tag: z.string(),
-})
+  
 
 export async function POST(req: Request) {
   try {
+   
     const user = await currentUser()
 
     if (!user) {
@@ -26,40 +25,37 @@ export async function POST(req: Request) {
         return new Response("Unauthorized", { status: 403 })
     }
 
-    const json = await req.json()
-    const body = PostAccountSchema.parse(json)
-    let account
-    
 
-    account = await db.account.update({
-        where: {
-            id: body.accountId
-        },
+
+    const json = await req.json()
+
+    console.log(json)
+    const body = PostWidgetSchema.parse(json)
+
+    const widget = await db.widget.create({
         data: {
-            tags: {
-                create: [
-                    {
-                        assignedAt: new Date(),
-                        assignedBy: userDb.id,
+            title: body.name,
+            userId: userDb.id,
+            widgetsOnTags: {
+                create: body.tag.map((tag) => {
+                    return {
                         tag: {
                             connect: {
-                                id: body.tag
+                                id: tag.id
                             }
                         }
                     }
-                ]
+                })
             }
         }
     })
+  
 
-    return new Response(JSON.stringify(account))
-    
+    return new Response(JSON.stringify(widget))
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
-
-    console.log(error)
 
     return new Response(null, { status: 500 })
   }

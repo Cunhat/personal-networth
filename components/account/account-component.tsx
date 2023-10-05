@@ -19,8 +19,6 @@ export const Account: React.FC<Omit<AccountType, "userId">> = ({
   balance,
   tags,
 }) => {
-  console.log("tags", tags)
-
   return (
     <Link href={`/accounts/${id}`}>
       <Card className="w-fit min-w-[200px]">

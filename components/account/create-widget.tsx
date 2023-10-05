@@ -1,10 +1,10 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Dialog } from "@radix-ui/react-dialog"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { Tag } from "@/lib/schemas/tags"
@@ -30,6 +30,10 @@ type CreateWidgetProps = {
   tags: Array<Tag>
 }
 
+type MultiSelectProps = {
+  data: Array<{ id: number | string; name: string }>
+}
+
 export const CreateWidget: React.FC<CreateWidgetProps> = ({ tags }) => {
   const [open, setOpen] = React.useState(false)
   const [isSaving, setIsSaving] = React.useState(false)
@@ -39,20 +43,21 @@ export const CreateWidget: React.FC<CreateWidgetProps> = ({ tags }) => {
 
   const router = useRouter()
 
+  const [selected, setSelected] = useState<MultiSelectProps["data"]>([])
+
   const onSubmit = async (data: FormData) => {
     setIsSaving(true)
 
-    // const response = await fetch(`/api/account`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     name: data.name,
-    //     category: data.category,
-    //     tag: data.tag,
-    //   }),
-    // })
+    const response = await fetch(`/api/widget`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: data.name,
+        tag: data.tag,
+      }),
+    })
 
     setIsSaving(false)
     setOpen(false)
@@ -96,7 +101,26 @@ export const CreateWidget: React.FC<CreateWidgetProps> = ({ tags }) => {
                 Tags
               </Label>
               <div className="col-span-3">
-                <MultiSelect data={tags} />
+                <Controller
+                  control={form.control}
+                  name="tag"
+                  render={({ field: { onChange } }) => (
+                    //
+                    <MultiSelect
+                      data={tags}
+                      selected={selected}
+                      onChange={(e) => {
+                        onChange(e)
+                        setSelected(e)
+                      }}
+                    />
+                  )}
+                />
+                {form.formState.errors?.tag && (
+                  <p className="px-1 py-2 text-xs text-red-600">
+                    {form.formState.errors.tag.message}
+                  </p>
+                )}
               </div>
             </div>
           </div>
