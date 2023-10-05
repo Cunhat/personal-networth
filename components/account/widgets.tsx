@@ -30,6 +30,17 @@ export const Widgets = async () => {
     },
   })
 
+  const widgets = await db.widget.findMany({
+    include: {
+      widgetsOnTags: true,
+    },
+    where: {
+      userId: userDb?.id,
+    },
+  })
+
+  console.log(widgets)
+
   return (
     <div>
       <Card className="">
@@ -39,7 +50,18 @@ export const Widgets = async () => {
             <CreateWidget tags={tags} />
           </div>
         </CardHeader>
-        <CardContent></CardContent>
+        <CardContent className="flex gap-3 wrap">
+          {widgets.map((widget) => (
+            <Card className="flex flex-col md:w-fit w-full">
+              <div className="flex flex-col gap-1 p-4">
+                <p className="text-muted-foreground">{widget.title}</p>
+                <h2 className="text-xl font-semibold tracking-tight">
+                  40 000 $
+                </h2>
+              </div>
+            </Card>
+          ))}
+        </CardContent>
       </Card>
     </div>
   )
