@@ -8,8 +8,6 @@ type MultiSelectProps = {
   onChange: (e: any) => void
 }
 
-console.log("MultiSelectProps")
-
 export const MultiSelect: React.FC<MultiSelectProps> = ({
   data,
   selected,
