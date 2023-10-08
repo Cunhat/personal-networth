@@ -9,6 +9,11 @@ import { Widgets } from "@/components/account/widgets"
 import { Categories } from "@/components/categories-components"
 import { Tags } from "@/components/tag-component"
 
+export const metadata = {
+  title: "Accounts",
+  description: "Manage account settings.",
+}
+
 export default async function Accounts() {
   const user = await currentUser()
 
