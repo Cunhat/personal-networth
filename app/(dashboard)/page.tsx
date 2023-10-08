@@ -7,6 +7,12 @@ import { NetWorth } from "@/components/dashboard/networth"
 import { NetWorthChart } from "@/components/dashboard/netWorthChart"
 import { Widget } from "@/components/widget"
 
+export const metadata = {
+  title: "Dashboard",
+  description:
+    "Your Personal Net Worth Dashboard: Track your finances, assets, and debts in one place for better financial management.",
+}
+
 export default async function Home() {
   const user = await currentUser()
 
@@ -73,7 +79,7 @@ export default async function Home() {
       </div>
       <div className="flex flex-col flex-1 overflow-auto gap-3">
         <NetWorthChart accounts={accounts} />
-        <div className="flex gap-3 flex-wrap  justify-normal">
+        <div className="flex gap-3 flex-wrap justify-normal">
           {widgets.map((widget) => (
             <Widget id={widget.id} key={widget.id} />
           ))}

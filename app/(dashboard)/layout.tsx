@@ -1,9 +1,46 @@
 import { notFound } from "next/navigation"
 
+import { siteConfig } from "@/config/site"
 import { Navbar } from "@/components/navbar"
 
 interface DashboardLayoutProps {
   children?: React.ReactNode
+}
+
+export const metadata = {
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  keywords: [
+    "Next.js",
+    "React",
+    "Tailwind CSS",
+    "Server Components",
+    "Radix UI",
+  ],
+  authors: [
+    {
+      name: "Tiago Cunha",
+      url: "https://github.com/Cunhat",
+    },
+  ],
+  creator: "cunhat",
+  openGraph: {
+    type: "website",
+    locale: "pt_PT",
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+  },
+  icons: {
+    icon: "/favicon.svg",
+    // shortcut: "/favicon-16x16.png",
+    // apple: "/apple-touch-icon.png",
+  },
+  // manifest: `${siteConfig.url}/site.webmanifest`,
 }
 
 export default async function DashboardLayout({
