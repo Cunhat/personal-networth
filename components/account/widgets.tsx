@@ -40,8 +40,6 @@ export const Widgets = async () => {
     },
   })
 
-  console.log(widgets)
-
   return (
     <div>
       <Card className="">
@@ -53,7 +51,7 @@ export const Widgets = async () => {
         </CardHeader>
         <CardContent className="flex gap-3 wrap">
           {widgets.map((widget) => (
-            <Widget id={widget.id} />
+            <Widget id={widget.id} key={widget.id} />
           ))}
         </CardContent>
       </Card>

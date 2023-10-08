@@ -5,6 +5,7 @@ import { db } from "@/lib/db"
 import { Card, CardContent } from "@/components/ui/card"
 import { NetWorth } from "@/components/dashboard/networth"
 import { NetWorthChart } from "@/components/dashboard/netWorthChart"
+import { Widget } from "@/components/widget"
 
 export default async function Home() {
   const user = await currentUser()
@@ -56,6 +57,15 @@ export default async function Home() {
     },
   })
 
+  const widgets = await db.widget.findMany({
+    include: {
+      widgetsOnTags: true,
+    },
+    where: {
+      userId: userDb?.id,
+    },
+  })
+
   return (
     <div className="grid flex-1 gap-8 md:grid-cols-[300px_1fr]">
       <div className="flex-1 pb-6">
@@ -63,37 +73,10 @@ export default async function Home() {
       </div>
       <div className="flex flex-col flex-1 overflow-auto gap-3">
         <NetWorthChart accounts={accounts} />
-        <div className="flex gap-3 flex-wrap lg:justify-between justify-normal">
-          <Card className="flex flex-col md:w-fit w-full">
-            <div className="flex flex-col gap-1 p-4">
-              <p className="text-muted-foreground">Total net money</p>
-              <h2 className="text-xl font-semibold tracking-tight">40 000 $</h2>
-            </div>
-          </Card>
-          <Card className="flex flex-col md:w-fit w-full">
-            <div className="flex flex-col gap-1 p-4">
-              <p className="text-muted-foreground">Total invested money</p>
-              <h2 className="text-xl font-semibold tracking-tight">40 000 $</h2>
-            </div>
-          </Card>
-          <Card className="flex flex-col md:w-fit w-full">
-            <div className="flex flex-col gap-1 p-4">
-              <p className="text-muted-foreground">Total crypto money</p>
-              <h2 className="text-xl font-semibold tracking-tight">40 000 $</h2>
-            </div>
-          </Card>
-          <Card className="flex flex-col md:w-fit w-full">
-            <div className="flex flex-col gap-1 p-4">
-              <p className="text-muted-foreground">Net money + crypto money</p>
-              <h2 className="text-xl font-semibold tracking-tight">40 000 $</h2>
-            </div>
-          </Card>
-          <Card className="flex flex-col md:w-fit w-full">
-            <div className="flex flex-col gap-1 p-4">
-              <p className="text-muted-foreground">Invested this year</p>
-              <h2 className="text-xl font-semibold tracking-tight">40 000 $</h2>
-            </div>
-          </Card>
+        <div className="flex gap-3 flex-wrap  justify-normal">
+          {widgets.map((widget) => (
+            <Widget id={widget.id} key={widget.id} />
+          ))}
         </div>
       </div>
     </div>

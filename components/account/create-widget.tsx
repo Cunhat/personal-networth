@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Dialog } from "@radix-ui/react-dialog"
+import { set } from "date-fns"
 import { Controller, useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -37,13 +38,12 @@ type MultiSelectProps = {
 export const CreateWidget: React.FC<CreateWidgetProps> = ({ tags }) => {
   const [open, setOpen] = React.useState(false)
   const [isSaving, setIsSaving] = React.useState(false)
+  const [selected, setSelected] = useState<MultiSelectProps["data"]>([])
   const form = useForm<FormData>({
     resolver: zodResolver(PostWidgetSchema),
   })
 
   const router = useRouter()
-
-  const [selected, setSelected] = useState<MultiSelectProps["data"]>([])
 
   const onSubmit = async (data: FormData) => {
     setIsSaving(true)
@@ -64,6 +64,11 @@ export const CreateWidget: React.FC<CreateWidgetProps> = ({ tags }) => {
     form.reset()
     router.refresh()
   }
+
+  useEffect(() => {
+    form.reset()
+    setSelected([])
+  }, [open])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

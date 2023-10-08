@@ -5,7 +5,7 @@ import { Check, ChevronDown } from "lucide-react"
 type MultiSelectProps = {
   data: Array<{ id: number | string; name: string }>
   selected: MultiSelectProps["data"]
-  onChange: () => void
+  onChange: (e: any) => void
 }
 
 export const MultiSelect: React.FC<MultiSelectProps> = ({
