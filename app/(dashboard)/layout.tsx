@@ -35,12 +35,10 @@ export const metadata = {
     description: siteConfig.description,
     siteName: siteConfig.name,
   },
+
   icons: {
-    icon: "/favicon.svg",
-    // shortcut: "/favicon-16x16.png",
-    // apple: "/apple-touch-icon.png",
+    icon: "/favicon.ico",
   },
-  // manifest: `${siteConfig.url}/site.webmanifest`,
 }
 
 export default async function DashboardLayout({
