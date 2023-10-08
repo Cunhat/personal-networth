@@ -21,7 +21,7 @@ export const Account: React.FC<Omit<AccountType, "userId">> = ({
 }) => {
   return (
     <Link href={`/accounts/${id}`}>
-      <Card className="w-fit min-w-[200px]">
+      <Card className="w-fit min-w-[200px] hover:bg-border">
         <CardHeader>
           <CardTitle className="text-lg">{name}</CardTitle>
           <CardDescription>{category.name}</CardDescription>

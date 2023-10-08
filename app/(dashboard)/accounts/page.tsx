@@ -53,7 +53,11 @@ export default async function Accounts() {
         },
       },
       category: true,
-      balance: true,
+      balance: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
     },
     where: {
       userId: userDb?.id,
