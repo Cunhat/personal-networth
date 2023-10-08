@@ -4,6 +4,7 @@ import { currentUser } from "@clerk/nextjs"
 import { db } from "@/lib/db"
 
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import { Widget } from "../widget"
 import { CreateWidget } from "./create-widget"
 
 export const Widgets = async () => {
@@ -52,14 +53,7 @@ export const Widgets = async () => {
         </CardHeader>
         <CardContent className="flex gap-3 wrap">
           {widgets.map((widget) => (
-            <Card className="flex flex-col md:w-fit w-full">
-              <div className="flex flex-col gap-1 p-4">
-                <p className="text-muted-foreground">{widget.title}</p>
-                <h2 className="text-xl font-semibold tracking-tight">
-                  40 000 $
-                </h2>
-              </div>
-            </Card>
+            <Widget id={widget.id} />
           ))}
         </CardContent>
       </Card>
