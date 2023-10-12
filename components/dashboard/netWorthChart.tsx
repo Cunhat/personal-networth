@@ -92,7 +92,7 @@ export const NetWorthChart: React.FC<NetWorthChartProps> = ({ accounts }) => {
         {data[0]?.data.length > 0 ? (
           <ResponsiveLine
             data={data}
-            margin={{ top: 30, right: 30, bottom: 30, left: 50 }}
+            margin={{ top: 40, right: 70, bottom: 30, left: 50 }}
             xScale={{ type: "point" }}
             yScale={{
               type: "linear",
@@ -126,6 +126,15 @@ export const NetWorthChart: React.FC<NetWorthChartProps> = ({ accounts }) => {
             pointBorderColor={{ from: "serie.color" }}
             pointLabelYOffset={-12}
             useMesh={true}
+            tooltip={(data) => {
+              return (
+                <div className="bg-white p-2 rounded-sm shadow-sm border">
+                  <p>{`${data.point.data.x} - ${Intl.NumberFormat().format(
+                    data.point.data.y as number
+                  )}€`}</p>
+                </div>
+              )
+            }}
           />
         ) : (
           <div className="flex justify-center items-center h-full">
