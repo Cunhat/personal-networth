@@ -51,12 +51,14 @@ export const Widget: React.FC<WidgetProps> = async ({ id }) => {
   }, 0)
 
   return (
-    <Card className="flex flex-col md:w-fit w-full">
-      <div className="flex flex-col gap-1 p-4">
+    <Card className="flex flex-col md:w-fit w-full gap-2 p-4">
+      <div className="flex flex-col gap-1">
         <p className="text-muted-foreground">{widgetInfo.title}</p>
         <h2 className="text-xl font-semibold tracking-tight">{`${Intl.NumberFormat().format(
           total
         )} €`}</h2>
+      </div>
+      <div className="flex gap-1 wrap">
         {widgetInfo.widgetsOnTags.map((tag) => (
           <Badge key={tag.tag.id} variant="secondary" className="w-fit">
             {tag.tag.name}
