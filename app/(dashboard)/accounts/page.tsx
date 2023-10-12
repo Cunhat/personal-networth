@@ -84,7 +84,7 @@ export default async function Accounts() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-wrap gap-4 ">
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4 ">
             {accounts.map((account) => {
               return <Account {...account} key={account.id} />
             })}
