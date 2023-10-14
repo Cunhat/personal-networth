@@ -1,12 +1,10 @@
 import { db } from "@/lib/db"
 import * as z from "zod"
-import { currentUser} from "@clerk/nextjs";
+import {auth, currentUser} from "@clerk/nextjs";
 
 
-const postCategorySchema = z.object({
-  name: z.string(),
-  type: z.string(),
-  id: z.string()
+const postDeleteCategorySchema = z.object({
+ id: z.string(),
 })
 
 export async function POST(req: Request) {
@@ -29,13 +27,14 @@ export async function POST(req: Request) {
     }
 
     const json = await req.json()
-    const body = postCategorySchema.parse(json)
+    const body = postDeleteCategorySchema.parse(json)
 
-    const category = await db.category.update({
+    const category = await db.category.delete({
         where: {
             id: body.id
-        },
-        data: {...body}
+        }
+
+        
     })
   
 
@@ -44,6 +43,8 @@ export async function POST(req: Request) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
+
+    console.log(error)
 
     return new Response(null, { status: 500 })
   }

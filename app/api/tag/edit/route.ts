@@ -1,13 +1,13 @@
 import { db } from "@/lib/db"
 import * as z from "zod"
-import { currentUser} from "@clerk/nextjs";
+import {auth, currentUser} from "@clerk/nextjs";
 
 
-const postCategorySchema = z.object({
-  name: z.string(),
-  type: z.string(),
-  id: z.string()
-})
+const PostEditTagSchema = z.object({
+    name: z.string().min(3).max(128),
+    id: z.string(),
+  })
+  
 
 export async function POST(req: Request) {
   try {
@@ -29,9 +29,9 @@ export async function POST(req: Request) {
     }
 
     const json = await req.json()
-    const body = postCategorySchema.parse(json)
+    const body = PostEditTagSchema.parse(json)
 
-    const category = await db.category.update({
+    const category = await db.tag.update({
         where: {
             id: body.id
         },

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 import { CreateCategory } from "./create-category-form"
+import { DeleteCategory } from "./delete-category"
 import { EditCategory } from "./edit-category-form"
 import { Tag } from "./tag"
 
@@ -28,6 +29,7 @@ export const Categories: React.FC<{ data: Category[] }> = ({ data }) => {
             key={category.id}
             name={category.name}
             editSlot={<EditCategory data={category} />}
+            deleteSlot={<DeleteCategory id={category.id} />}
           />
         ))}
       </CardContent>
