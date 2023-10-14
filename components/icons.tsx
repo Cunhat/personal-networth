@@ -4,6 +4,8 @@ import {
   ChevronsUpDown,
   ChevronUp,
   Loader2,
+  Pencil,
+  Trash2,
   // Icon as LucideIcon,
 } from "lucide-react"
 
@@ -15,4 +17,6 @@ export const Icons = {
   chevronsUpDown: ChevronsUpDown,
   chevronDown: ChevronDown,
   chevronUp: ChevronUp,
+  pencil: Pencil,
+  trash: Trash2,
 }

@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 import { CreateCategory } from "./create-category-form"
+import { EditCategory } from "./edit-category-form"
+import { Tag } from "./tag"
 
 export const Categories: React.FC<{ data: Category[] }> = ({ data }) => {
   return (
@@ -19,9 +21,14 @@ export const Categories: React.FC<{ data: Category[] }> = ({ data }) => {
       </CardHeader>
       <CardContent className="flex gap-2 flex-wrap">
         {data?.map((category) => (
-          <Badge key={category.id} variant="secondary">
-            {category.name}
-          </Badge>
+          // <Badge key={category.id} variant="secondary">
+          //   {category.name}
+          // </Badge>
+          <Tag
+            key={category.id}
+            name={category.name}
+            editSlot={<EditCategory data={category} />}
+          />
         ))}
       </CardContent>
     </Card>
