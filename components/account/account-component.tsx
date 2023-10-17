@@ -12,7 +12,7 @@ import {
 
 import { Badge } from "../ui/badge"
 
-export const Account: React.FC<Omit<AccountType, "userId">> = ({
+export const Account: React.FC<AccountType> = ({
   name,
   category,
   id,
@@ -24,7 +24,9 @@ export const Account: React.FC<Omit<AccountType, "userId">> = ({
       <Card className="w-full h-full hover:bg-border flex flex-col justify-between">
         <CardHeader>
           <CardTitle className="text-lg">{name}</CardTitle>
-          <CardDescription>{category.name}</CardDescription>
+          <CardDescription>
+            {category?.name ?? "No categories..."}
+          </CardDescription>
           {tags?.map((tag) => (
             <Badge key={tag.tag.id} variant="secondary" className="w-fit">
               {tag.tag.name}

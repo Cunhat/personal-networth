@@ -32,11 +32,8 @@ export async function POST(req: Request) {
     const category = await db.category.delete({
         where: {
             id: body.id
-        }
-
-        
+        } 
     })
-  
 
     return new Response(JSON.stringify(category))
   } catch (error) {

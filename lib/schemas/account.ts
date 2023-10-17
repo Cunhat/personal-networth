@@ -4,9 +4,9 @@ import { CategorySchema } from "./category";
 export const AccountSchema = z.object({
     name: z.string(),
     id: z.string(),
-    userId: z.string(),
-    category: CategorySchema,
-    categoryId: z.string(),
+    userId: z.string().optional(),
+    category: CategorySchema.nullish(),
+    categoryId: z.string().nullish(),
     balance: z.array(z.object({
       id: z.string(),
       balance: z.number(),

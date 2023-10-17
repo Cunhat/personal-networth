@@ -77,7 +77,7 @@ model Category {
 
   userId  String
   user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Account Account[]
+  account Account[]
 
   @@index([userId])
   @@map(name: "categories")
