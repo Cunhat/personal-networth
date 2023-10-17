@@ -44,7 +44,7 @@ const Account: React.FC<AccountPageProps> = async ({ params }) => {
   return (
     <main className="flex h-full flex-col gap-3">
       <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
-        {account?.name} - {account?.category.name}
+        {account?.name} - {account?.category?.name ?? "No category"}
       </h2>
       <div className="flex justify-between items-center">
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">

@@ -45,7 +45,7 @@ model Account {
   id         String    @id @default(cuid())
   name       String    @unique
   categoryId String
-  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category   Category  @relation(fields: [categoryId], references: [id])
   userId     String
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   balance    Balance[]
@@ -77,7 +77,7 @@ model Category {
 
   userId  String
   user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Account Account[]
+  account Account[]
 
   @@index([userId])
   @@map(name: "categories")
@@ -96,9 +96,9 @@ model Tag {
 }
 
 model AccountsOnTags {
-  tag        Tag      @relation(fields: [tagId], references: [id])
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId      String
-  account    Account  @relation(fields: [accountId], references: [id])
+  account    Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
   accountId  String
   assignedAt DateTime @default(now())
   assignedBy String

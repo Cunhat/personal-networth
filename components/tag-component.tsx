@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 import { CreateCategory } from "./create-category-form"
 import { CreateTag } from "./create-tag-form"
+import { EditTag } from "./edit-tag"
+import { Tag as TagBadge } from "./tag"
 
 export const Tags: React.FC<{ data: Tag[] }> = ({ data }) => {
   return (
@@ -20,9 +22,12 @@ export const Tags: React.FC<{ data: Tag[] }> = ({ data }) => {
       </CardHeader>
       <CardContent className="flex gap-2 flex-wrap">
         {data?.map((tag) => (
-          <Badge key={tag.id} variant="secondary">
-            {tag.name}
-          </Badge>
+          <TagBadge
+            key={tag.id}
+            name={tag.name}
+            editSlot={<EditTag data={tag} />}
+            // deleteSlot={<DeleteCategory id={category.id} />}
+          />
         ))}
       </CardContent>
     </Card>
