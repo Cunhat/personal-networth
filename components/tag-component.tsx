@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 import { CreateCategory } from "./create-category-form"
 import { CreateTag } from "./create-tag-form"
+import { DeleteTag } from "./delete-tag"
 import { EditTag } from "./edit-tag"
 import { Tag as TagBadge } from "./tag"
 
@@ -26,7 +27,7 @@ export const Tags: React.FC<{ data: Tag[] }> = ({ data }) => {
             key={tag.id}
             name={tag.name}
             editSlot={<EditTag data={tag} />}
-            // deleteSlot={<DeleteCategory id={category.id} />}
+            deleteSlot={<DeleteTag id={tag.id} />}
           />
         ))}
       </CardContent>
