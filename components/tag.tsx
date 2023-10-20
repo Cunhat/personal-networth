@@ -20,12 +20,10 @@ export const Tag: React.FC<TagProps> = ({ name, deleteSlot, editSlot }) => {
       onMouseLeave={() => setIsHovering(false)}
     >
       {name}
-      {isHovering && (
-        <div className="flex pr-1 justify-end items-center gap-1 absolute rounded-full top-0 right-0 left-0 bottom-0 bg-white bg-opacity-85 w-full h-full">
-          {editSlot}
-          {deleteSlot}
-        </div>
-      )}
+      <div className="flex pr-1 justify-end items-center gap-1 absolute rounded-full top-0 right-0 left-0 bottom-0  hover:bg-gradient-to-r from-transparent via-white to-gray-200 w-full h-full opacity-0 hover:opacity-100">
+        {editSlot}
+        {deleteSlot}
+      </div>
     </Badge>
   )
 }

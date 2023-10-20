@@ -1,6 +1,8 @@
 import { db } from "@/lib/db"
 import * as z from "zod"
 import {auth, currentUser} from "@clerk/nextjs";
+import { Prisma } from '@prisma/client'
+
 
 
 const postDeleteCategorySchema = z.object({
@@ -41,7 +43,11 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    console.log(error)
+    if(error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2014') {
+        console.log(error.message)
+      }
+    }
 
     return new Response(null, { status: 500 })
   }
