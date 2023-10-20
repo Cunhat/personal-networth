@@ -1,13 +1,12 @@
 import { db } from "@/lib/db"
 import * as z from "zod"
 import {auth, currentUser} from "@clerk/nextjs";
-import { Prisma } from '@prisma/client'
 
 
-
-const postDeleteCategorySchema = z.object({
- id: z.string(),
-})
+const PostDeleteTagSchema = z.object({
+    id: z.string(),
+  })
+  
 
 export async function POST(req: Request) {
   try {
@@ -29,13 +28,14 @@ export async function POST(req: Request) {
     }
 
     const json = await req.json()
-    const body = postDeleteCategorySchema.parse(json)
+    const body = PostDeleteTagSchema.parse(json)
 
-    const category = await db.category.delete({
+    const category = await db.tag.delete({
         where: {
             id: body.id
-        } 
+        }
     })
+  
 
     return new Response(JSON.stringify(category))
   } catch (error) {
@@ -43,11 +43,7 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    if(error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === 'P2014') {
-        console.log(error.message)
-      }
-    }
+    console.error(error)
 
     return new Response(null, { status: 500 })
   }
