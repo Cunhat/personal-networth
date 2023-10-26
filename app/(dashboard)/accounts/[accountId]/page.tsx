@@ -1,11 +1,12 @@
 import React from "react"
 
 import { db } from "@/lib/db"
-import { Badge } from "@/components/ui/badge"
 import { AddTag } from "@/components/account/add-tag"
+import { RemoveTag } from "@/components/account/remove-tag"
 import { columns } from "@/components/account/table-columns"
 import { AddBalance } from "@/components/add-balance-form"
 import { DataTable } from "@/components/table-component"
+import { Tag } from "@/components/tag"
 
 interface AccountPageProps {
   params: { accountId: string }
@@ -68,9 +69,14 @@ const Account: React.FC<AccountPageProps> = async ({ params }) => {
       </div>
       <div className="flex flex-wrap gap-4">
         {account?.tags?.map((tag) => (
-          <Badge key={tag.tag.id} variant="secondary" className="w-fit">
-            {tag.tag.name}
-          </Badge>
+          <Tag
+            key={tag.tag.id}
+            name={tag.tag.name}
+            // editSlot={<EditTag data={tag} />}
+            deleteSlot={
+              <RemoveTag tagId={tag.tag.id} accountId={params.accountId} />
+            }
+          />
         ))}
       </div>
     </main>

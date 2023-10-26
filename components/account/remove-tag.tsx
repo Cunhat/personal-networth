@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -21,14 +23,15 @@ import {
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 
-import { Icons } from "./icons"
-import { Input } from "./ui/input"
+import { Icons } from "../icons"
+import { Input } from "../ui/input"
 
 type DeleteTagProps = {
-  id: Tag["id"]
+  tagId: Tag["id"]
+  accountId: string
 }
 
-export const DeleteTag: React.FC<DeleteTagProps> = ({ id }) => {
+export const RemoveTag: React.FC<DeleteTagProps> = ({ tagId, accountId }) => {
   const [isSaving, setIsSaving] = React.useState(false)
   const [open, setOpen] = React.useState(false)
   const router = useRouter()
@@ -36,13 +39,14 @@ export const DeleteTag: React.FC<DeleteTagProps> = ({ id }) => {
   const onSubmit = async () => {
     setIsSaving(true)
 
-    const response = await fetch(`/api/tag/delete`, {
+    const response = await fetch(`/api/account/removeTag`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: id,
+        tagId: tagId,
+        accountId: accountId,
       }),
     })
 
@@ -61,8 +65,8 @@ export const DeleteTag: React.FC<DeleteTagProps> = ({ id }) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            category and remove your data from our servers.
+            This action cannot be undone. This will permanently remove your tag
+            and account association.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
