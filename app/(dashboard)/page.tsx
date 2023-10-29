@@ -5,7 +5,7 @@ import { db } from "@/lib/db"
 import { Card, CardContent } from "@/components/ui/card"
 import { NetWorth } from "@/components/dashboard/networth"
 import { NetWorthChart } from "@/components/dashboard/netWorthChart"
-import { Widget } from "@/components/widget"
+import { Widget } from "@/components/widget/widget"
 
 export const metadata = {
   title: "Dashboard",
