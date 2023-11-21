@@ -1,6 +1,7 @@
 import React from "react"
 
 import { db } from "@/lib/db"
+import { Tag } from "@/lib/schemas/tags"
 
 import { Icons } from "../icons"
 import { Badge } from "../ui/badge"
@@ -13,13 +14,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
-import { DeleteWidget, WidgetActionMenu } from "./delete-widget"
+import { DeleteWidget } from "./delete-widget"
+import { EditWidget } from "./edit-widget"
 
 type WidgetProps = {
   id: string
+  tags: Array<Tag>
+  editable?: boolean
 }
 
-export const Widget: React.FC<WidgetProps> = async ({ id }) => {
+export const Widget: React.FC<WidgetProps> = async ({
+  id,
+  tags,
+  editable = false,
+}) => {
   const widgetInfo = await db.widget.findUnique({
     include: {
       widgetsOnTags: {
@@ -34,6 +42,8 @@ export const Widget: React.FC<WidgetProps> = async ({ id }) => {
   })
 
   if (!widgetInfo) return null
+
+  console.log(widgetInfo)
 
   const arrayOfTagsIds = widgetInfo.widgetsOnTags.map((tag) => tag.tagId)
 
@@ -62,9 +72,12 @@ export const Widget: React.FC<WidgetProps> = async ({ id }) => {
 
   return (
     <Card className="flex flex-col md:w-fit w-full gap-2 p-4 min-w-[200px] relative">
-      <div className="flex gap-2 absolute right-4 top-4">
-        <DeleteWidget id={id} />
-      </div>
+      {editable && (
+        <div className="flex gap-2 absolute right-4 top-4">
+          <DeleteWidget id={id} />
+          <EditWidget tags={tags} widget={widgetInfo} />
+        </div>
+      )}
       <div className="flex flex-col gap-1">
         <p className="text-muted-foreground">{widgetInfo.title}</p>
         <h2 className="text-xl font-semibold tracking-tight">{`${Intl.NumberFormat().format(

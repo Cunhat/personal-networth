@@ -51,7 +51,7 @@ export const Widgets = async () => {
         </CardHeader>
         <CardContent className="flex gap-3 wrap">
           {widgets.map((widget) => (
-            <Widget id={widget.id} key={widget.id} />
+            <Widget id={widget.id} key={widget.id} tags={tags} editable />
           ))}
         </CardContent>
       </Card>

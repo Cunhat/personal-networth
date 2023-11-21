@@ -72,7 +72,6 @@ const Account: React.FC<AccountPageProps> = async ({ params }) => {
           <Tag
             key={tag.tag.id}
             name={tag.tag.name}
-            // editSlot={<EditTag data={tag} />}
             deleteSlot={
               <RemoveTag tagId={tag.tag.id} accountId={params.accountId} />
             }
