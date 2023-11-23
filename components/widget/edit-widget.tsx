@@ -121,14 +121,23 @@ export const EditWidget: React.FC<CreateWidgetProps> = ({ tags, widget }) => {
                       data={tags}
                       selected={selected}
                       onChange={(e) => {
-                        const uniques = new Set(e)
+                        const uniqueValues = new Set()
+                        let result: Tag[] = []
 
-                        const uniqueArray = e.map((item) => {
-                          return uniques.has(item) ? item : null
-                        })
-                        console.log(uniqueArray)
-                        onChange(uniqueArray)
-                        setSelected(uniqueArray)
+                        for (const obj of e) {
+                          const value = obj.id
+
+                          if (!uniqueValues.has(value)) {
+                            uniqueValues.add(value)
+                            result.push(obj)
+                          } else {
+                            // If you want to remove the original occurrence as well
+                            result = result.filter((item) => item.id !== value)
+                          }
+                        }
+
+                        onChange(result)
+                        setSelected(result)
                       }}
                     />
                   )}
