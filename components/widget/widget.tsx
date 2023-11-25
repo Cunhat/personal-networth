@@ -19,7 +19,7 @@ import { EditWidget } from "./edit-widget"
 
 type WidgetProps = {
   id: string
-  tags: Array<Tag>
+  tags?: Array<Tag>
   editable?: boolean
 }
 
@@ -42,8 +42,6 @@ export const Widget: React.FC<WidgetProps> = async ({
   })
 
   if (!widgetInfo) return null
-
-  console.log(widgetInfo)
 
   const arrayOfTagsIds = widgetInfo.widgetsOnTags.map((tag) => tag.tagId)
 
@@ -75,7 +73,7 @@ export const Widget: React.FC<WidgetProps> = async ({
       {editable && (
         <div className="flex gap-2 absolute right-4 top-4">
           <DeleteWidget id={id} />
-          <EditWidget tags={tags} widget={widgetInfo} />
+          <EditWidget tags={tags!} widget={widgetInfo} />
         </div>
       )}
       <div className="flex flex-col gap-1">
