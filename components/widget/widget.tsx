@@ -69,9 +69,9 @@ export const Widget: React.FC<WidgetProps> = async ({
   }, 0)
 
   return (
-    <Card className="flex flex-col md:w-fit w-full gap-2 p-4 min-w-[200px] relative">
+    <Card className="flex flex-col md:w-fit w-full gap-2 p-4 min-w-[200px] relative group/widget">
       {editable && (
-        <div className="flex gap-2 absolute right-4 top-4">
+        <div className="flex gap-2 absolute right-4 top-4 invisible group-hover/widget:visible">
           <DeleteWidget id={id} />
           <EditWidget tags={tags!} widget={widgetInfo} />
         </div>
