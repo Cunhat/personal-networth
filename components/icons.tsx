@@ -3,6 +3,7 @@ import {
   ChevronDown,
   ChevronsUpDown,
   ChevronUp,
+  GripVertical,
   Loader2,
   Pencil,
   Trash2,
@@ -19,4 +20,5 @@ export const Icons = {
   chevronUp: ChevronUp,
   pencil: Pencil,
   trash: Trash2,
+  gridVertical: GripVertical,
 }

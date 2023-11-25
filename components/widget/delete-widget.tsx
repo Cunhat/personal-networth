@@ -1,7 +1,9 @@
+"use client"
+
 import React from "react"
 import { useRouter } from "next/navigation"
 
-import { Tag } from "@/lib/schemas/tags"
+import { Icons } from "../icons"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,23 +14,21 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "../ui/alert-dialog"
 
-import { Icons } from "./icons"
-
-type DeleteTagProps = {
-  id: Tag["id"]
+type DeleteWidgetProps = {
+  id: string
 }
 
-export const DeleteTag: React.FC<DeleteTagProps> = ({ id }) => {
+export const DeleteWidget: React.FC<DeleteWidgetProps> = ({ id }) => {
   const [isSaving, setIsSaving] = React.useState(false)
-  const [open, setOpen] = React.useState(false)
+
   const router = useRouter()
 
   const onSubmit = async () => {
     setIsSaving(true)
 
-    const response = await fetch(`/api/tag/delete`, {
+    const response = await fetch(`/api/widget/delete`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,22 +39,20 @@ export const DeleteTag: React.FC<DeleteTagProps> = ({ id }) => {
     })
 
     setIsSaving(false)
-    setOpen(false)
-
     router.refresh()
   }
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Icons.trash className="w-3 h-3 hover:cursor-pointer" />
+        <Icons.trash className="w-4 h-4 hover:cursor-pointer" />
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete your
-            category and remove your data from our servers.
+            widget and remove your data from our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

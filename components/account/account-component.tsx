@@ -21,7 +21,7 @@ export const Account: React.FC<AccountType> = ({
 }) => {
   return (
     <Link href={`/accounts/${id}`}>
-      <Card className="w-full h-full hover:bg-border flex flex-col justify-between">
+      <Card className="w-full h-full hover:bg-accent flex flex-col justify-between">
         <CardHeader>
           <CardTitle className="text-lg">{name}</CardTitle>
           <CardDescription>

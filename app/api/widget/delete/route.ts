@@ -1,7 +1,12 @@
 import { db } from "@/lib/db"
 import * as z from "zod"
 import {auth, currentUser} from "@clerk/nextjs";
-import { PostWidgetSchema } from "@/lib/validations/widgets"
+
+
+const PostDeleteWidgetSchema = z.object({
+    id: z.string(),
+  })
+  
 
 export async function POST(req: Request) {
   try {
@@ -23,33 +28,27 @@ export async function POST(req: Request) {
     }
 
     const json = await req.json()
+    const body = PostDeleteWidgetSchema.parse(json)
 
-    const body = PostWidgetSchema.parse(json)
+    const widgetOnTags = await db.widgetsOnTags.deleteMany({
+        where: {
+            widgetId: body.id
+        }
+    })
 
-    const widget = await db.widget.create({
-        data: {
-            title: body.name,
-            userId: userDb.id,
-            widgetsOnTags: {
-                create: body.tag.map((tag) => {
-                    return {
-                        tag: {
-                            connect: {
-                                id: tag.id
-                            }
-                        }
-                    }
-                })
-            }
+    const category = await db.widget.delete({
+        where: {
+            id: body.id
         }
     })
   
-
-    return new Response(JSON.stringify(widget))
+    return new Response(JSON.stringify(category))
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
+
+    console.error(error)
 
     return new Response(null, { status: 500 })
   }
