@@ -5,6 +5,7 @@ import { db } from "@/lib/db"
 import { Card, CardContent } from "@/components/ui/card"
 import { NetWorth } from "@/components/dashboard/networth"
 import { NetWorthChart } from "@/components/dashboard/netWorthChart"
+import { NetWorthPercentages } from "@/components/dashboard/networthPercentages"
 import { Widget } from "@/components/widget/widget"
 
 export const metadata = {
@@ -84,6 +85,7 @@ export default async function Home() {
             <Widget id={widget.id} key={widget.id} />
           ))}
         </div>
+        <NetWorthPercentages />
       </div>
     </div>
   )
