@@ -58,7 +58,7 @@ const data = [
 
 export const NetWorthPercentages = () => {
   return (
-    <Card className="h-[400px] flex flex-col">
+    <Card className="h-[400px] flex flex-col z-30">
       <CardHeader>
         <CardTitle>Net Worth Chart</CardTitle>
       </CardHeader>
@@ -67,11 +67,12 @@ export const NetWorthPercentages = () => {
           data={data}
           keys={["netWorth"]}
           indexBy="months"
-          margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+          borderRadius={5}
+          margin={{ top: 50, right: 20, bottom: 50, left: 50 }}
           padding={0.3}
           valueScale={{ type: "linear" }}
           indexScale={{ type: "band", round: true }}
-          colors={["#97e3d5", "#61cdbb", "#f47560", "#e25c3b"]}
+          colors={["#61cdbb"]}
           borderColor={{
             from: "color",
             modifiers: [["darker", 1.6]],
@@ -106,9 +107,13 @@ export const NetWorthPercentages = () => {
           enableGridY={false}
           role="application"
           ariaLabel="Nivo bar chart demo"
-          barAriaLabel={(e) =>
-            e.id + ": " + e.formattedValue + " in country: " + e.indexValue
-          }
+          tooltip={(data) => {
+            return (
+              <div className="bg-white z-99 p-2 rounded-sm shadow-sm border">
+                <p>{`${data.data.months} ${data.data.netWorth}`}</p>
+              </div>
+            )
+          }}
         />
       </CardContent>
     </Card>
