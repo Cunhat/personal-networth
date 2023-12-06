@@ -1,62 +1,42 @@
 "use client"
 
-import React from "react"
+import React, { use, useEffect, useState } from "react"
 import { ResponsiveBar } from "@nivo/bar"
+
+import { Account } from "@/lib/schemas/account"
+import { ChartDataPoint } from "@/lib/schemas/globals"
+import { getChartData } from "@/lib/utils"
 
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 
-const data = [
-  {
-    months: "Jan",
-    netWorth: 1000,
-  },
-  {
-    months: "Feb",
-    netWorth: -2000,
-  },
-  {
-    months: "Mar",
-    netWorth: 3000,
-  },
-  {
-    months: "Apr",
-    netWorth: 4000,
-  },
-  {
-    months: "May",
-    netWorth: 5000,
-  },
-  {
-    months: "Jun",
-    netWorth: 6000,
-  },
-  {
-    months: "Jul",
-    netWorth: 7000,
-  },
-  {
-    months: "Aug",
-    netWorth: 8000,
-  },
-  {
-    months: "Sep",
-    netWorth: 9000,
-  },
-  {
-    months: "Oct",
-    netWorth: 10000,
-  },
-  {
-    months: "Nov",
-    netWorth: 11000,
-  },
-  {
-    months: "Dec",
-    netWorth: 12000,
-  },
-]
+type NetWorthPercentagesProps = {
+  accounts: Account[]
+}
 
-export const NetWorthPercentages = () => {
+type ChartData = Array<{ months: string; netWorth: number }>
+
+export const NetWorthPercentages: React.FC<NetWorthPercentagesProps> = ({
+  accounts,
+}) => {
+  const [data, setData] = useState<ChartData>([])
+  useEffect(() => {
+    const netWorth = getChartData(accounts)
+
+    let baseValue = netWorth[0].y ?? 0
+    let values: ChartData = []
+
+    netWorth?.forEach((item) => {
+      const netWorthValue = (item.y * 100) / baseValue - 100
+      values.push({
+        months: item.x as string,
+        netWorth: netWorthValue,
+      })
+      baseValue = item.y
+      console.log(values)
+    })
+    setData(values)
+  }, [])
+
   return (
     <Card className="h-[400px] flex flex-col z-30">
       <CardHeader>
