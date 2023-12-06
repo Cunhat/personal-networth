@@ -5,6 +5,8 @@ import { ResponsiveLine } from "@nivo/line"
 import dayjs from "dayjs"
 
 import { Account } from "@/lib/schemas/account"
+import { ChartDataPoint } from "@/lib/schemas/globals"
+import { getChartData } from "@/lib/utils"
 
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 
@@ -17,71 +19,9 @@ type ChartData = {
   data: Array<ChartDataPoint>
 }[]
 
-type ChartDataPoint = {
-  x: number | string
-  y: number | null
-}
-
 export const NetWorthChart: React.FC<NetWorthChartProps> = ({ accounts }) => {
-  const getChartData = () => {
-    const chartData = [] as Array<ChartDataPoint>
-    const currentDate = dayjs()
-    let startDate = currentDate.subtract(1, "year")
-
-    accounts.forEach((account) => {
-      while (!startDate.isAfter(currentDate, "month")) {
-        const value = account.balance.filter((balance) =>
-          startDate.isSame(balance.createdAt, "month")
-        )
-        let lastMonthValue = value[0]
-
-        if (lastMonthValue) {
-          const alreadyExists = chartData.find(
-            (data) => data.x === startDate.format("MMM YYYY")
-          )
-          if (alreadyExists) {
-            alreadyExists.y! += lastMonthValue.balance
-          } else {
-            chartData.push({
-              x: startDate.format("MMM YYYY"),
-              y: lastMonthValue ? lastMonthValue.balance : 0,
-            })
-          }
-        } else {
-          const lastValue = account.balance.filter((balance) =>
-            startDate.isAfter(balance.createdAt, "month")
-          )
-
-          if (lastValue.length > 0) {
-            const valueToAdd = lastValue[0]
-
-            const exists = chartData.find(
-              (data) => data.x === startDate.format("MMM YYYY")
-            )
-
-            if (exists) {
-              exists.y! += valueToAdd.balance
-            }
-          }
-        }
-
-        startDate = startDate.add(1, "month")
-      }
-      startDate = currentDate.subtract(1, "year")
-    })
-
-    chartData.sort((a, b) => {
-      if (typeof a.x === "string" && typeof b.x === "string") {
-        return dayjs(a.x).isAfter(dayjs(b.x)) ? 1 : -1
-      } else {
-        return a.x > b.x ? 1 : -1
-      }
-    })
-
-    return chartData
-  }
-
-  const data: ChartData = [{ id: "netWorth", data: getChartData() }]
+  const netWorth = getChartData(accounts)
+  const data: ChartData = [{ id: "netWorth", data: netWorth }]
 
   return (
     <Card className="h-[400px] flex flex-col">
