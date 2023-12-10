@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs"
 
 import { db } from "@/lib/db"
 import { Card, CardContent } from "@/components/ui/card"
+import { InvestmentsPie } from "@/components/dashboard/investmentsPie"
 import { NetWorth } from "@/components/dashboard/networth"
 import { NetWorthChart } from "@/components/dashboard/netWorthChart"
 import { NetWorthPercentages } from "@/components/dashboard/netWorthPercentages"
@@ -73,6 +74,14 @@ export default async function Home() {
     },
   })
 
+  const tags = await db.tag.findMany({
+    where: {
+      userId: userDb?.id,
+    },
+  })
+
+  console.log(widgets.map((widget) => widget.widgetsOnTags))
+
   return (
     <div className="grid flex-1 gap-8 md:grid-cols-[300px_1fr]">
       <div className="flex-1 pb-6">
@@ -86,6 +95,10 @@ export default async function Home() {
           ))}
         </div>
         <NetWorthPercentages accounts={accounts} />
+        <div className="grid grid-cols-2 gap-3">
+          <InvestmentsPie />
+          <InvestmentsPie />
+        </div>
       </div>
     </div>
   )
