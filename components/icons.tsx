@@ -5,6 +5,7 @@ import {
   ChevronUp,
   GripVertical,
   Loader2,
+  MoreVertical,
   Pencil,
   Trash2,
   // Icon as LucideIcon,
@@ -21,4 +22,5 @@ export const Icons = {
   pencil: Pencil,
   trash: Trash2,
   gridVertical: GripVertical,
+  moreVertical: MoreVertical,
 }

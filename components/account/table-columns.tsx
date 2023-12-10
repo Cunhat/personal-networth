@@ -3,6 +3,16 @@
 import { ColumnDef } from "@tanstack/react-table"
 import dayjs from "dayjs"
 
+import { TableActions } from "../table-actions"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu"
+
 export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "balance",
@@ -16,5 +26,9 @@ export const columns: ColumnDef<any>[] = [
     cell: ({ row }) => (
       <div>{dayjs(row.getValue("createdAt")).format("DD/MM/YYYY")}</div>
     ),
+  },
+  {
+    accessorKey: "actions",
+    cell: ({ ...props }) => <TableActions {...props} />,
   },
 ]
