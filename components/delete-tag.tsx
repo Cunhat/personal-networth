@@ -22,7 +22,7 @@ type DeleteTagProps = {
 
 export const DeleteTag: React.FC<DeleteTagProps> = ({ id }) => {
   const [isSaving, setIsSaving] = React.useState(false)
-  const [open, setOpen] = React.useState(false)
+
   const router = useRouter()
 
   const onSubmit = async () => {
@@ -39,8 +39,6 @@ export const DeleteTag: React.FC<DeleteTagProps> = ({ id }) => {
     })
 
     setIsSaving(false)
-    setOpen(false)
-
     router.refresh()
   }
 

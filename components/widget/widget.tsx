@@ -6,14 +6,6 @@ import { Tag } from "@/lib/schemas/tags"
 import { Icons } from "../icons"
 import { Badge } from "../ui/badge"
 import { Card } from "../ui/card"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
 import { DeleteWidget } from "./delete-widget"
 import { EditWidget } from "./edit-widget"
 
