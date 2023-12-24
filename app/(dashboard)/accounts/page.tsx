@@ -7,6 +7,7 @@ import { Account } from "@/components/account/account-component"
 import { CreateAccount } from "@/components/account/create-account-form"
 import { Widgets } from "@/components/account/widgets"
 import { Categories } from "@/components/categories-components"
+import { CreatePieChart } from "@/components/PieChart/create"
 import { Tags } from "@/components/tag-component"
 
 export const metadata = {
@@ -92,6 +93,7 @@ export default async function Accounts() {
         </CardContent>
       </Card>
       <Widgets />
+      <CreatePieChart tags={tags} />
     </main>
   )
 }

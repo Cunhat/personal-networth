@@ -3,17 +3,16 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Dialog } from "@radix-ui/react-dialog"
-import { set } from "date-fns"
 import { Controller, useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { Tag } from "@/lib/schemas/tags"
-import { PostWidgetSchema } from "@/lib/validations/widgets"
+import { PostChartSchema } from "@/lib/validations/pieCharts"
 
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
 import {
+  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -25,22 +24,23 @@ import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { MultiSelect } from "../ui/multi-select"
 
-type FormData = z.infer<typeof PostWidgetSchema>
-
-type CreateWidgetProps = {
-  tags: Array<Tag>
-}
-
 type MultiSelectProps = {
   data: Array<{ id: number | string; name: string }>
 }
 
-export const CreateWidget: React.FC<CreateWidgetProps> = ({ tags }) => {
-  const [open, setOpen] = React.useState(false)
-  const [isSaving, setIsSaving] = React.useState(false)
+type FormData = z.infer<typeof PostChartSchema>
+
+type CreatePieChartProps = {
+  tags: Array<Tag>
+}
+
+export const CreatePieChart: React.FC<CreatePieChartProps> = ({ tags }) => {
+  const [isSaving, setIsSaving] = useState(false)
   const [selected, setSelected] = useState<MultiSelectProps["data"]>([])
+  const [open, setOpen] = React.useState(false)
+
   const form = useForm<FormData>({
-    resolver: zodResolver(PostWidgetSchema),
+    resolver: zodResolver(PostChartSchema),
   })
 
   const router = useRouter()
@@ -48,7 +48,7 @@ export const CreateWidget: React.FC<CreateWidgetProps> = ({ tags }) => {
   const onSubmit = async (data: FormData) => {
     setIsSaving(true)
 
-    const response = await fetch(`/api/widget`, {
+    await fetch("/api/pieChart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,14 +73,14 @@ export const CreateWidget: React.FC<CreateWidgetProps> = ({ tags }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>New Widget</Button>
+        <Button>New PieChart</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <DialogHeader>
-            <DialogTitle>Create new widget</DialogTitle>
+            <DialogTitle>Create new pie chart</DialogTitle>
             <DialogDescription>
-              Create a new widget here. Click save when you are done.
+              Create a new pie chart here. Click save when you are done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">

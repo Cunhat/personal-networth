@@ -3,10 +3,10 @@ import { currentUser } from "@clerk/nextjs"
 
 import { db } from "@/lib/db"
 import { Card, CardContent } from "@/components/ui/card"
-import { InvestmentsPie } from "@/components/dashboard/investmentsPie"
 import { NetWorth } from "@/components/dashboard/networth"
 import { NetWorthChart } from "@/components/dashboard/netWorthChart"
 import { NetWorthPercentages } from "@/components/dashboard/netWorthPercentages"
+import { PieChart } from "@/components/PieChart/pieChart"
 import { Widget } from "@/components/widget/widget"
 
 export const metadata = {
@@ -47,6 +47,16 @@ export default async function Home() {
           createdAt: "desc",
         },
       },
+      tags: {
+        select: {
+          tag: true,
+          tagId: true,
+          accountId: true,
+          account: true,
+          assignedAt: true,
+          assignedBy: true,
+        },
+      },
     },
     where: {
       userId: userDb?.id,
@@ -80,7 +90,15 @@ export default async function Home() {
     },
   })
 
-  console.log(widgets.map((widget) => widget.widgetsOnTags))
+  const pieCharts = await db.pieChart.findMany({
+    select: {
+      title: true,
+      pieChartsOnTags: true,
+    },
+    where: {
+      userId: userDb?.id,
+    },
+  })
 
   return (
     <div className="grid flex-1 gap-8 md:grid-cols-[300px_1fr]">
@@ -96,8 +114,9 @@ export default async function Home() {
         </div>
         <NetWorthPercentages accounts={accounts} />
         <div className="grid grid-cols-2 gap-3">
-          <InvestmentsPie />
-          <InvestmentsPie />
+          {pieCharts.map((pieChart) => (
+            <PieChart accounts={accounts} pieChart={pieChart} />
+          ))}
         </div>
       </div>
     </div>
