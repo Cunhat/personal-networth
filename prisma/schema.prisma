@@ -37,6 +37,7 @@ model User {
   balance    Balance[]
   tag        Tag[]
   widget     Widget[]
+  PieChart   PieChart[]
 
   @@map(name: "users")
 }
@@ -84,12 +85,13 @@ model Category {
 }
 
 model Tag {
-  id            String           @id @default(cuid())
-  name          String
-  userId        String
-  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accounts      AccountsOnTags[]
-  widgetsOnTags WidgetsOnTags[]
+  id              String            @id @default(cuid())
+  name            String
+  userId          String
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accounts        AccountsOnTags[]
+  widgetsOnTags   WidgetsOnTags[]
+  PieChartsOnTags PieChartsOnTags[]
 
   @@index([userId])
   @@map(name: "tags")
@@ -127,5 +129,27 @@ model WidgetsOnTags {
 
   @@id([widgetId, tagId])
   @@index([widgetId])
+  @@index([tagId])
+}
+
+model PieChart {
+  id              String            @id @default(cuid())
+  title           String
+  userId          String
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pieChartsOnTags PieChartsOnTags[]
+
+  @@index([userId])
+  @@map(name: "pie_chart")
+}
+
+model PieChartsOnTags {
+  pieChartId String
+  pieChart   PieChart @relation(fields: [pieChartId], references: [id])
+  tagId      String
+  tag        Tag      @relation(fields: [tagId], references: [id])
+
+  @@id([pieChartId, tagId])
+  @@index([pieChartId])
   @@index([tagId])
 }
