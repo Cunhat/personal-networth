@@ -92,6 +92,7 @@ export default async function Home() {
 
   const pieCharts = await db.pieChart.findMany({
     select: {
+      id: true,
       title: true,
       pieChartsOnTags: true,
     },
@@ -115,7 +116,11 @@ export default async function Home() {
         <NetWorthPercentages accounts={accounts} />
         <div className="grid grid-cols-2 gap-3">
           {pieCharts.map((pieChart) => (
-            <PieChart accounts={accounts} pieChart={pieChart} />
+            <PieChart
+              accounts={accounts}
+              pieChart={pieChart}
+              key={pieChart.id}
+            />
           ))}
         </div>
       </div>
