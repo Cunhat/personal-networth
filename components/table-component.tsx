@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client"
 
 import * as React from "react"
@@ -117,7 +116,7 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) =>
                 row?.original?.isCustomRow ? (
-                  <TableRow>
+                  <TableRow key={row.id}>
                     <TableCell
                       colSpan={columns.length}
                       key={row.id}
