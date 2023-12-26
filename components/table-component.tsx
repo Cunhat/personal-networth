@@ -1,6 +1,8 @@
+// @ts-nocheck
 "use client"
 
 import * as React from "react"
+import { ReactNode } from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -31,7 +33,7 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  initialSorting: SortingState
+  initialSorting?: SortingState
 }
 
 export function DataTable<TData, TValue>({
@@ -98,7 +100,7 @@ export function DataTable<TData, TValue>({
                               header.column.columnDef.header,
                               header.getContext()
                             )}
-                        {header.column.getCanFilter() &&
+                        {header.column.getCanSort() &&
                           {
                             asc: <Icons.chevronUp className="h-4 w-4" />,
                             desc: <Icons.chevronDown className="h-4 w-4" />,
@@ -113,21 +115,36 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+              table.getRowModel().rows.map((row) =>
+                row?.original?.isCustomRow ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      key={row.id}
+                      className="items-center justify-center text-center"
+                    >
                       {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
+                        row?.original?.element as ReactNode,
+                        row.getVisibleCells()
                       )}
                     </TableCell>
-                  ))}
-                </TableRow>
-              ))
+                  </TableRow>
+                ) : (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                )
+              )
             ) : (
               <TableRow>
                 <TableCell
