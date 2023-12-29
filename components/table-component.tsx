@@ -117,7 +117,7 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) =>
                 row?.original?.isCustomRow ? (
-                  <TableRow key={row.id}>
+                  <TableRow key={row.id} className="bg-muted/50">
                     <TableCell
                       colSpan={columns.length}
                       key={row.id}

@@ -44,7 +44,7 @@ export const columns: ColumnDef<NetWorthDataCategoryRow>[] = [
     cell: (info) => (
       <p>
         {info.getValue() !== undefined
-          ? new Intl.NumberFormat().format(info.getValue() as number)
+          ? new Intl.NumberFormat().format(info.getValue() as number) + " €"
           : "- -"}
       </p>
     ),
@@ -56,7 +56,7 @@ export const columns: ColumnDef<NetWorthDataCategoryRow>[] = [
     cell: (info) => (
       <p>
         {info.getValue() !== undefined
-          ? new Intl.NumberFormat().format(info.getValue() as number)
+          ? new Intl.NumberFormat().format(info.getValue() as number) + " €"
           : "- -"}
       </p>
     ),
@@ -68,7 +68,7 @@ export const columns: ColumnDef<NetWorthDataCategoryRow>[] = [
     cell: (info) => (
       <p>
         {info.getValue() !== undefined
-          ? new Intl.NumberFormat().format(info.getValue() as number)
+          ? new Intl.NumberFormat().format(info.getValue() as number) + " €"
           : "- -"}
       </p>
     ),
@@ -80,7 +80,7 @@ export const columns: ColumnDef<NetWorthDataCategoryRow>[] = [
     cell: (info) => (
       <p>
         {info.getValue() !== undefined
-          ? new Intl.NumberFormat().format(info.getValue() as number)
+          ? new Intl.NumberFormat().format(info.getValue() as number) + " €"
           : "- -"}
       </p>
     ),
@@ -92,7 +92,7 @@ export const columns: ColumnDef<NetWorthDataCategoryRow>[] = [
     cell: (info) => (
       <p>
         {info.getValue() !== undefined
-          ? new Intl.NumberFormat().format(info.getValue() as number)
+          ? new Intl.NumberFormat().format(info.getValue() as number) + " €"
           : "- -"}
       </p>
     ),
@@ -104,7 +104,7 @@ export const columns: ColumnDef<NetWorthDataCategoryRow>[] = [
     cell: (info) => (
       <p>
         {info.getValue() !== undefined
-          ? new Intl.NumberFormat().format(info.getValue() as number)
+          ? new Intl.NumberFormat().format(info.getValue() as number) + " €"
           : "- -"}
       </p>
     ),
@@ -116,7 +116,7 @@ export const columns: ColumnDef<NetWorthDataCategoryRow>[] = [
     cell: (info) => (
       <p>
         {info.getValue() !== undefined
-          ? new Intl.NumberFormat().format(info.getValue() as number)
+          ? new Intl.NumberFormat().format(info.getValue() as number) + " €"
           : "- -"}
       </p>
     ),
@@ -128,7 +128,7 @@ export const columns: ColumnDef<NetWorthDataCategoryRow>[] = [
     cell: (info) => (
       <p>
         {info.getValue() !== undefined
-          ? new Intl.NumberFormat().format(info.getValue() as number)
+          ? new Intl.NumberFormat().format(info.getValue() as number) + " €"
           : "- -"}
       </p>
     ),
@@ -140,7 +140,7 @@ export const columns: ColumnDef<NetWorthDataCategoryRow>[] = [
     cell: (info) => (
       <p>
         {info.getValue() !== undefined
-          ? new Intl.NumberFormat().format(info.getValue() as number)
+          ? new Intl.NumberFormat().format(info.getValue() as number) + " €"
           : "- -"}
       </p>
     ),
@@ -152,7 +152,7 @@ export const columns: ColumnDef<NetWorthDataCategoryRow>[] = [
     cell: (info) => (
       <p>
         {info.getValue() !== undefined
-          ? new Intl.NumberFormat().format(info.getValue() as number)
+          ? new Intl.NumberFormat().format(info.getValue() as number) + " €"
           : "- -"}
       </p>
     ),
@@ -164,7 +164,7 @@ export const columns: ColumnDef<NetWorthDataCategoryRow>[] = [
     cell: (info) => (
       <p>
         {info.getValue() !== undefined
-          ? new Intl.NumberFormat().format(info.getValue() as number)
+          ? new Intl.NumberFormat().format(info.getValue() as number) + " €"
           : "- -"}
       </p>
     ),
@@ -176,7 +176,7 @@ export const columns: ColumnDef<NetWorthDataCategoryRow>[] = [
     cell: (info) => (
       <p>
         {info.getValue() !== undefined
-          ? new Intl.NumberFormat().format(info.getValue() as number)
+          ? new Intl.NumberFormat().format(info.getValue() as number) + " €"
           : "- -"}
       </p>
     ),
