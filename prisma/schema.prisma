@@ -38,6 +38,7 @@ model User {
   tag        Tag[]
   widget     Widget[]
   PieChart   PieChart[]
+  Expense    Expense[]
 
   @@map(name: "users")
 }
@@ -152,4 +153,16 @@ model PieChartsOnTags {
   @@id([pieChartId, tagId])
   @@index([pieChartId])
   @@index([tagId])
+}
+
+model Expense {
+  id             String   @id @default(cuid())
+  amount         Float
+  firstOccurence DateTime
+  repeatNumber   Int
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }

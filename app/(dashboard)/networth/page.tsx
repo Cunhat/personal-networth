@@ -64,7 +64,7 @@ export default async function NetWorth() {
 
     if (accList.length > 0) {
       data.push({
-        element: <p className="text-black">{category.name}</p>,
+        element: <p className="text-black font-bold ">{category.name}</p>,
         isCustomRow: true,
       })
       accList.forEach((account) => {
