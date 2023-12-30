@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import dayjs from "dayjs"
 import { useForm } from "react-hook-form"
@@ -31,17 +32,42 @@ type FormData = z.infer<typeof ExpenseSchema>
 export const CreateExpense: React.FC = () => {
   const [open, setOpen] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const router = useRouter()
 
   const form = useForm<FormData>({
     resolver: zodResolver(ExpenseSchema),
   })
 
-  const onSubmit = (data: FormData) => {}
+  const onSubmit = async (data: FormData) => {
+    setIsSaving(true)
+
+    const response = await fetch(`/api/expenses`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: data.name,
+        amount: data.amount,
+        numberOfOccurrences: data.numberOfOccurrences,
+        firstOccurrence: data.firstOccurrence,
+      }),
+    })
+
+    setIsSaving(false)
+    setOpen(false)
+    form.reset()
+    router.refresh()
+  }
+
+  useEffect(() => {
+    form.reset()
+  }, [open])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>New Expense</Button>
+        <Button>Create</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
@@ -71,7 +97,10 @@ export const CreateExpense: React.FC = () => {
                   Amount
                 </Label>
                 <div className="col-span-3">
-                  <Input id="name" {...form.register("amount")} />
+                  <Input
+                    id="amount"
+                    {...form.register("amount", { valueAsNumber: true })}
+                  />
                   {form.formState.errors?.amount && (
                     <p className="px-1 py-2 text-xs text-red-600">
                       {form.formState.errors.amount.message}
@@ -84,7 +113,12 @@ export const CreateExpense: React.FC = () => {
                   Number of occurrences
                 </Label>
                 <div className="col-span-3">
-                  <Input id="name" {...form.register("numberOfOccurrences")} />
+                  <Input
+                    id="numberOfOccurrences"
+                    {...form.register("numberOfOccurrences", {
+                      valueAsNumber: true,
+                    })}
+                  />
                   {form.formState.errors?.numberOfOccurrences && (
                     <p className="px-1 py-2 text-xs text-red-600">
                       {form.formState.errors.numberOfOccurrences.message}
