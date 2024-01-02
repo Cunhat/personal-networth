@@ -16,9 +16,7 @@ export const PieChart: React.FC<PieChartProps> = ({ pieChart, accounts }) => {
   let accountTags: ChartData[] = []
   let total = 0
 
-  console.log("pieChart", pieChart)
-
-  pieChart.pieChartsOnTags.forEach((pie) => {
+  pieChart?.pieChartsOnTags?.forEach((pie) => {
     let name = ""
     let value = 0
 
