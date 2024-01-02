@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { cn } from "@/lib/utils"
-import { ExpenseSchema } from "@/lib/validations/expense"
+import { ExpensesSchema } from "@/lib/validations/expenses"
 import {
   Dialog,
   DialogContent,
@@ -27,7 +27,7 @@ import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 
-type FormData = z.infer<typeof ExpenseSchema>
+type FormData = z.infer<typeof ExpensesSchema>
 
 export const CreateExpense: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -35,7 +35,7 @@ export const CreateExpense: React.FC = () => {
   const router = useRouter()
 
   const form = useForm<FormData>({
-    resolver: zodResolver(ExpenseSchema),
+    resolver: zodResolver(ExpensesSchema),
   })
 
   const onSubmit = async (data: FormData) => {

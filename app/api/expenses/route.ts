@@ -1,7 +1,7 @@
 import { db } from "@/lib/db"
 import * as z from "zod"
 import { currentUser} from "@clerk/nextjs";
-import { PostExpensesSchema } from "@/lib/validations/expenses";
+import { ExpensesSchema } from "@/lib/validations/expenses";
 
 
 export async function POST(req: Request) {
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
 
     const json = await req.json()
 
-    const body = PostExpensesSchema.parse(json)
+    const body = ExpensesSchema.parse(json)
 
     console.log(body)
 
