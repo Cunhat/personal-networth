@@ -78,7 +78,7 @@ export const NetWorthChart: React.FC<NetWorthChartProps> = ({ accounts }) => {
           />
         ) : (
           <div className="flex justify-center items-center h-full">
-            <p>No data to be displayed..</p>
+            <p>No data to be displayed...</p>
           </div>
         )}
       </CardContent>
