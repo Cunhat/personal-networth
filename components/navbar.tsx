@@ -37,6 +37,12 @@ export const Navbar = () => {
       >
         NetWorth
       </Link>
+      <Link
+        href="/expenses"
+        className={NavItem({ active: pathName === "/expenses" })}
+      >
+        Expenses
+      </Link>
     </nav>
   )
 }

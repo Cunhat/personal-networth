@@ -156,10 +156,11 @@ model PieChartsOnTags {
 }
 
 model Expense {
-  id             String   @id @default(cuid())
-  amount         Float
-  firstOccurence DateTime
-  repeatNumber   Int
+  id                  String   @id @default(cuid())
+  name                String
+  amount              Float
+  firstOccurrence     DateTime
+  numberOfOccurrences Int
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
