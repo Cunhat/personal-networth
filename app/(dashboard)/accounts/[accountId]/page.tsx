@@ -2,6 +2,7 @@ import React from "react"
 
 import { db } from "@/lib/db"
 import { AddTag } from "@/components/account/add-tag"
+import Delete from "@/components/account/delete"
 import { RemoveTag } from "@/components/account/remove-tag"
 import { columns } from "@/components/account/table-columns"
 import { AddBalance } from "@/components/add-balance-form"
@@ -47,11 +48,12 @@ const Account: React.FC<AccountPageProps> = async ({ params }) => {
       <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
         {account?.name} - {account?.category?.name ?? "No category"}
       </h2>
-      <div className="flex justify-between items-center">
+      <div className="flex items-center">
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
           Balances
         </h4>
         <AddBalance accountId={params.accountId} />
+        <Delete id={params.accountId} />
       </div>
       <p className="text-muted-foreground">
         Here&apos;s a list of your balances for the latest months!

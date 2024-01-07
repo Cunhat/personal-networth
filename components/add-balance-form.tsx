@@ -66,7 +66,7 @@ export const AddBalance: React.FC<{ accountId: string }> = ({ accountId }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Add Balance</Button>
+        <Button className="ml-auto mr-3">Add Balance</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
