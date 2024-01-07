@@ -41,20 +41,18 @@ export const Widgets = async () => {
   })
 
   return (
-    <div>
-      <Card className="">
-        <CardHeader>
-          <div className="flex justify-between items-center">
-            <CardTitle>Widgets</CardTitle>
-            <CreateWidget tags={tags} />
-          </div>
-        </CardHeader>
-        <CardContent className="flex gap-3 wrap">
-          {widgets.map((widget) => (
-            <Widget id={widget.id} key={widget.id} tags={tags} editable />
-          ))}
-        </CardContent>
-      </Card>
-    </div>
+    <Card className="">
+      <CardHeader>
+        <div className="flex justify-between items-center">
+          <CardTitle>Widgets</CardTitle>
+          <CreateWidget tags={tags} />
+        </div>
+      </CardHeader>
+      <CardContent className="flex gap-3 flex-wrap">
+        {widgets.map((widget) => (
+          <Widget id={widget.id} key={widget.id} tags={tags} editable />
+        ))}
+      </CardContent>
+    </Card>
   )
 }
