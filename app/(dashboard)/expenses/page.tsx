@@ -44,8 +44,10 @@ export default async function Expenses() {
             .month(monthIndex)
             .format("MMMM")
             .toLowerCase()
+
           month[monthName] =
-            (monthIndex + 1) % expense.numberOfOccurrences === 0
+            expense.numberOfOccurrences === 1 &&
+            parseInt(dayjs(expense.firstOccurrence).format("M")) >= monthIndex
               ? expense.amount
               : undefined
           return expense
