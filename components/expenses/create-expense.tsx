@@ -3,11 +3,9 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import dayjs from "dayjs"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { cn } from "@/lib/utils"
 import { ExpensesSchema } from "@/lib/validations/expenses"
 import {
   Dialog,
@@ -21,17 +19,32 @@ import {
 
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
-import { Calendar } from "../ui/calendar"
-import { Form, FormControl, FormField, FormItem } from "../ui/form"
+import { Form } from "../ui/form"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+import { Toggle } from "../ui/toggle"
 
 type FormData = z.infer<typeof ExpensesSchema>
+
+const Months = [
+  { key: "january", label: "Jan" },
+  { key: "february", label: "Feb" },
+  { key: "march", label: "Mar" },
+  { key: "april", label: "Apr" },
+  { key: "may", label: "May" },
+  { key: "june", label: "Jun" },
+  { key: "july", label: "Jul" },
+  { key: "august", label: "Aug" },
+  { key: "september", label: "Sep" },
+  { key: "october", label: "Oct" },
+  { key: "november", label: "Nov" },
+  { key: "december", label: "Dec" },
+]
 
 export const CreateExpense: React.FC = () => {
   const [open, setOpen] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const [selectedMonths, setSelectedMonths] = useState<string[]>([])
   const router = useRouter()
 
   const form = useForm<FormData>({
@@ -40,6 +53,7 @@ export const CreateExpense: React.FC = () => {
 
   const onSubmit = async (data: FormData) => {
     setIsSaving(true)
+    console.log("selectedMonths", selectedMonths)
 
     const response = await fetch(`/api/expenses`, {
       method: "POST",
@@ -49,8 +63,7 @@ export const CreateExpense: React.FC = () => {
       body: JSON.stringify({
         name: data.name,
         amount: data.amount,
-        numberOfOccurrences: data.numberOfOccurrences,
-        firstOccurrence: data.firstOccurrence,
+        months: selectedMonths.join("|"),
       }),
     })
 
@@ -62,7 +75,16 @@ export const CreateExpense: React.FC = () => {
 
   useEffect(() => {
     form.reset()
+    setSelectedMonths([])
   }, [open])
+
+  const handleToggleMonth = (pressed: boolean, month: string) => {
+    if (pressed) {
+      setSelectedMonths([...selectedMonths, month])
+    } else {
+      setSelectedMonths(selectedMonths.filter((m) => m !== month))
+    }
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -108,77 +130,22 @@ export const CreateExpense: React.FC = () => {
                   )}
                 </div>
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="numberOfOccurrences" className="text-right">
-                  Number of occurrences
-                </Label>
-                <div className="col-span-3">
-                  <Input
-                    id="numberOfOccurrences"
-                    {...form.register("numberOfOccurrences", {
-                      valueAsNumber: true,
-                    })}
-                  />
-                  {form.formState.errors?.numberOfOccurrences && (
-                    <p className="px-1 py-2 text-xs text-red-600">
-                      {form.formState.errors.numberOfOccurrences.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Started at
-                </Label>
-                <div className="col-span-3">
-                  <FormField
-                    control={form.control}
-                    name="firstOccurrence"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col">
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl>
-                              <Button
-                                variant={"outline"}
-                                className={cn(
-                                  "w-[280px] pl-3 text-left font-normal",
-                                  !field.value && "text-muted-foreground"
-                                )}
-                              >
-                                {field.value ? (
-                                  dayjs(field.value).format("DD/MMM/YYYY")
-                                ) : (
-                                  <span>Pick a date</span>
-                                )}
-                                <Icons.calendar className="ml-auto h-4 w-4 opacity-50" />
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date: Date) =>
-                                date > new Date() ||
-                                date < new Date("1900-01-01")
-                              }
-                              initialFocus
-                            />
-                          </PopoverContent>
-                        </Popover>
-                        {form.formState.errors?.firstOccurrence && (
-                          <p className="px-1 text-xs text-red-600">
-                            {form.formState.errors.firstOccurrence.message}
-                          </p>
-                        )}
-                      </FormItem>
-                    )}
-                  />
-                </div>
+              <div className="flex gap-3 flex-wrap">
+                {Months.map((month, index) => (
+                  <Toggle
+                    key={month.key + index}
+                    variant="outline"
+                    aria-label="Toggle italic"
+                    onPressedChange={(value) =>
+                      handleToggleMonth(value, month.key)
+                    }
+                  >
+                    <p>{month.label}</p>
+                  </Toggle>
+                ))}
               </div>
             </div>
+
             <DialogFooter>
               <Button type="submit" disabled={isSaving}>
                 {isSaving && (

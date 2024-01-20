@@ -1,7 +1,7 @@
 import { db } from "@/lib/db"
 import * as z from "zod"
 import { currentUser} from "@clerk/nextjs";
-import { ExpensesSchema } from "@/lib/validations/expenses";
+import { ExpensesApiSchema } from "@/lib/validations/expenses";
 
 
 export async function POST(req: Request) {
@@ -23,9 +23,11 @@ export async function POST(req: Request) {
         return new Response("Unauthorized", { status: 403 })
     }
 
+
+
     const json = await req.json()
 
-    const body = ExpensesSchema.parse(json)
+    const body = ExpensesApiSchema.parse(json)
 
     console.log(body)
 
@@ -33,8 +35,7 @@ export async function POST(req: Request) {
          data: {
           name: body.name,
           amount: body.amount,
-          firstOccurrence: body.firstOccurrence,
-          numberOfOccurrences: body.numberOfOccurrences,
+          months: body.months,
           userId: userDb.id
          }
     })
