@@ -21,7 +21,7 @@ export type ExpensesData = {
 
 const RenderValue: React.FC<{ value: number | undefined }> = ({ value }) => (
   <p>
-    {value !== undefined ? new Intl.NumberFormat().format(value) + "€" : "- -"}
+    {value !== undefined ? new Intl.NumberFormat().format(value) + "€" : ""}
   </p>
 )
 
