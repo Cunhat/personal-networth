@@ -5,6 +5,7 @@ import dayjs from "dayjs"
 
 import { db } from "@/lib/db"
 import { CreateExpense } from "@/components/expenses/create-expense"
+import { CreateIncome } from "@/components/expenses/create-income"
 import { columns, ExpensesData } from "@/components/expenses/table-columns"
 import { DataTable } from "@/components/table-component"
 
@@ -75,6 +76,12 @@ export default async function Expenses() {
 
   return (
     <main className="flex flex-col h-full gap-3">
+      <div className="flex justify-between">
+        <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+          Income
+        </h2>
+        <CreateIncome />
+      </div>
       <div className="flex justify-between">
         <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
           Expenses
