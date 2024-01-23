@@ -4,9 +4,11 @@ import { currentUser } from "@clerk/nextjs"
 import dayjs from "dayjs"
 
 import { db } from "@/lib/db"
+import { Card } from "@/components/ui/card"
 import { CreateExpense } from "@/components/expenses/create-expense"
-import { CreateIncome } from "@/components/expenses/create-income"
 import { columns, ExpensesData } from "@/components/expenses/table-columns"
+import { CreateIncome } from "@/components/income/create-income"
+import { DeleteIncome } from "@/components/income/delete-income"
 import { DataTable } from "@/components/table-component"
 
 export default async function Expenses() {
@@ -19,6 +21,12 @@ export default async function Expenses() {
   const userDb = await db.user.findUnique({
     where: {
       email: user?.emailAddresses[0].emailAddress ?? "",
+    },
+  })
+
+  const income = await db.income.findMany({
+    where: {
+      userId: userDb?.id,
     },
   })
 
@@ -81,6 +89,21 @@ export default async function Expenses() {
           Income
         </h2>
         <CreateIncome />
+      </div>
+      <div className="flex gap-3 flex-wrap">
+        {income.map((income) => (
+          <Card className="flex flex-col md:w-fit w-full gap-2 p-4 min-w-[200px] relative group/widget">
+            <div className="flex gap-2 absolute right-4 top-4 invisible group-hover/widget:visible">
+              <DeleteIncome id={income.id} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-muted-foreground">{income.name}</p>
+              <h2 className="text-xl font-semibold tracking-tight">{`${Intl.NumberFormat().format(
+                income.amount
+              )} €`}</h2>
+            </div>
+          </Card>
+        ))}
       </div>
       <div className="flex justify-between">
         <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
