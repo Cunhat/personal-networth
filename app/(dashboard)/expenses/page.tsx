@@ -116,7 +116,10 @@ export default async function Expenses() {
       </div>
       <div className="flex gap-3 flex-wrap">
         {income.map((income) => (
-          <Card className="flex flex-col md:w-fit w-full gap-2 p-4 min-w-[200px] relative group/widget">
+          <Card
+            className="flex flex-col md:w-fit w-full gap-2 p-4 min-w-[200px] relative group/widget"
+            key={income.id}
+          >
             <div className="flex gap-2 absolute right-4 top-4 invisible group-hover/widget:visible">
               <DeleteIncome id={income.id} />
               <EditIncome
