@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, useForm } from "react-hook-form"
 import { z } from "zod"
@@ -31,6 +32,8 @@ export const CreateIncome = () => {
     resolver: zodResolver(IncomeSchema),
   })
 
+  const router = useRouter()
+
   const onSubmit = async (data: FormData) => {
     setIsSaving(true)
 
@@ -46,7 +49,7 @@ export const CreateIncome = () => {
       setOpen(false)
       form.reset()
     }
-
+    router.refresh()
     setIsSaving(false)
   }
 

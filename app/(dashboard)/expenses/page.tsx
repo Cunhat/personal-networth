@@ -81,6 +81,29 @@ export default async function Expenses() {
         0
       ),
     })
+
+    const effortRate = months.reduce((month: any, monthIndex) => {
+      const monthName = dayjs()
+        .month(monthIndex)
+        .format("MMMM")
+        .toLowerCase() as keyof ExpensesData
+      // console.log(totalPerMonth[monthName])
+
+      const sumOfIncomes = income.reduce(
+        (value, incomeVal) => value + incomeVal.amount,
+        0
+      )
+      month[monthName] = (
+        (totalPerMonth[monthName] / sumOfIncomes) * 100 ?? 0
+      ).toFixed(1)
+
+      return month
+    }, {})
+
+    data.push({
+      name: "Effort Rate",
+      ...effortRate,
+    })
   }
 
   return (
