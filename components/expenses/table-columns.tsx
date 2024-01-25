@@ -25,7 +25,7 @@ const RenderValue: React.FC<{ value: number | undefined; label: string }> = ({
   value,
   label,
 }) => {
-  if (label === "Effort Rate") return <EffortRate value={value} />
+  if (label === "Effort Rate") return <EffortRate value={value ?? 0} />
 
   return (
     <p>
