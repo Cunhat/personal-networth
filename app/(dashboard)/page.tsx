@@ -18,8 +18,6 @@ export const metadata = {
 export default async function Home() {
   const user = await currentUser()
 
-  console.log("Clerk user: ", user)
-
   if (!user) {
     redirect("/sign-in")
   }
@@ -29,8 +27,6 @@ export default async function Home() {
       email: user?.emailAddresses[0].emailAddress ?? "",
     },
   })
-
-  console.log("userDB: ", userDb)
 
   const accounts = await db.account.findMany({
     select: {
@@ -104,8 +100,6 @@ export default async function Home() {
       userId: userDb?.id,
     },
   })
-
-  console.log("pieCharts: ", pieCharts)
 
   return (
     <div className="grid flex-1 gap-8 md:grid-cols-[300px_1fr]">

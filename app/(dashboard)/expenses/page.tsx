@@ -100,10 +100,14 @@ export default async function Expenses() {
       return month
     }, {})
 
+    console.log(effortRate)
+
     data.push({
       name: "Effort Rate",
       ...effortRate,
     })
+
+    console.log(data)
   }
 
   return (
