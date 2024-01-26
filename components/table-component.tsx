@@ -51,6 +51,8 @@ export function DataTable<TData, TValue>({
     initialSorting ?? []
   )
 
+  console.log(data)
+
   const table = useReactTable({
     data,
     columns,
@@ -67,7 +69,7 @@ export function DataTable<TData, TValue>({
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    //  getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
