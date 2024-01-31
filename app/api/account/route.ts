@@ -32,6 +32,8 @@ export async function POST(req: Request) {
     const body = PostAccountSchema.parse(json)
     let account
 
+    console.log(body)
+
     if(body.tag === undefined) {
         account = await db.account.create({
             data: {name: body.name, categoryId: body.category, userId: userDb.id}
