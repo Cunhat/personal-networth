@@ -100,9 +100,11 @@ export default async function Expenses() {
       return month
     }, {})
 
-    const yearlyTotalExpenses = data.reduce((sum, dataELem) => {
-      return sum + Number(dataELem.total)
-    }, 0)
+    const yearlyTotalExpenses = data
+      .filter((elem) => elem.name !== "Total")
+      .reduce((sum, dataELem) => {
+        return sum + Number(dataELem.total)
+      }, 0)
 
     const yearlyEffortRate = (yearlyTotalExpenses / (sumOfIncomes * 12)) * 100
 

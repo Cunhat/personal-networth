@@ -53,7 +53,6 @@ export const CreateExpense: React.FC = () => {
 
   const onSubmit = async (data: FormData) => {
     setIsSaving(true)
-    console.log("selectedMonths", selectedMonths)
 
     const response = await fetch(`/api/expenses`, {
       method: "POST",
