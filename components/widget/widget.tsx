@@ -1,4 +1,6 @@
 import React from "react"
+import { redirect } from "next/navigation"
+import { currentUser } from "@clerk/nextjs"
 
 import { db } from "@/lib/db"
 import { Tag } from "@/lib/schemas/tags"
@@ -20,6 +22,18 @@ export const Widget: React.FC<WidgetProps> = async ({
   tags,
   editable = false,
 }) => {
+  const user = await currentUser()
+
+  if (!user) {
+    redirect("/sign-in")
+  }
+
+  const userDb = await db.user.findUnique({
+    where: {
+      email: user?.emailAddresses[0].emailAddress ?? "",
+    },
+  })
+
   const widgetInfo = await db.widget.findUnique({
     include: {
       widgetsOnTags: {
@@ -30,6 +44,7 @@ export const Widget: React.FC<WidgetProps> = async ({
     },
     where: {
       id: id,
+      userId: userDb?.id,
     },
   })
 
@@ -53,12 +68,11 @@ export const Widget: React.FC<WidgetProps> = async ({
           },
         },
       },
+      userId: userDb?.id,
     },
   })
 
   const total = accounts.reduce((acc, account) => {
-    console.log(account.name, account.balance)
-
     return acc + (account.balance.length > 0 ? account?.balance[0]?.balance : 0)
   }, 0)
 
