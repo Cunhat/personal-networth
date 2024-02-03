@@ -57,8 +57,12 @@ export const Widget: React.FC<WidgetProps> = async ({
   })
 
   const total = accounts.reduce((acc, account) => {
-    return acc + account.balance[0].balance
+    console.log(account.name, account.balance)
+
+    return acc + (account.balance.length > 0 ? account?.balance[0]?.balance : 0)
   }, 0)
+
+  // console.log(widgetInfo.title, total)
 
   return (
     <Card className="flex flex-col md:w-fit w-full gap-2 p-4 min-w-[200px] relative group/widget">
