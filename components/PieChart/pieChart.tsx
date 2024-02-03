@@ -25,10 +25,10 @@ export const PieChart: React.FC<PieChartProps> = ({ pieChart, accounts }) => {
     })
 
     list.forEach((account) => {
-      value += account.balance[0].balance
+      value += account?.balance.length > 0 ? account?.balance[0]?.balance : 0
       name =
         account?.tags !== undefined && account?.tags[0]?.tagId === pie.tagId
-          ? account.tags[0].tag.name
+          ? account?.tags[0].tag.name
           : "No Tag"
     })
 
