@@ -76,8 +76,6 @@ export const Widget: React.FC<WidgetProps> = async ({
     return acc + (account.balance.length > 0 ? account?.balance[0]?.balance : 0)
   }, 0)
 
-  // console.log(widgetInfo.title, total)
-
   return (
     <Card className="flex flex-col md:w-fit w-full gap-2 p-4 min-w-[200px] relative group/widget">
       {editable && (
