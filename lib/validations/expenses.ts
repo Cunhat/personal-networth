@@ -10,3 +10,4 @@ export const ExpensesApiSchema = z.object({
     amount: z.number().min(0.01, "Amount must be greater than 0"),
     months: z.string().min(1)
   })
+

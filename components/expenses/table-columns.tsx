@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { EffortRate } from "./effort-rate"
+import { TableActions } from "./table-actions"
 
 export type ExpensesData = {
   name: string
@@ -182,6 +183,12 @@ export const columns: ColumnDef<ExpensesData>[] = [
         label={info.cell.row.original.name}
       />
     ),
+    enableSorting: false,
+  },
+  {
+    header: () => "",
+    accessorKey: "actions",
+    cell: ({ ...props }) => <TableActions {...props} />,
     enableSorting: false,
   },
 ]
