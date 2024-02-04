@@ -45,6 +45,7 @@ export default async function Expenses() {
       const arrayOfMonths = expense.months.split("|")
 
       data.push({
+        id: expense.id,
         name: expense.name,
         total: expense.amount * arrayOfMonths.length,
 
