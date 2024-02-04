@@ -5,6 +5,14 @@ import dayjs from "dayjs"
 
 import { db } from "@/lib/db"
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { NetWorth as NetWorthCmp } from "@/components/netWorth/net-worth"
+import {
   columns,
   NetWorthData,
   NetWorthDataCategoryRow,
@@ -77,9 +85,13 @@ export default async function NetWorth() {
               .month(monthIndex)
               .format("MMMM")
               .toLowerCase()
+
             acc[monthName] = account.balance.find(
-              (elem) => dayjs(elem.createdAt).month() === monthIndex
+              (elem) =>
+                dayjs(elem.createdAt).month() === monthIndex &&
+                dayjs(elem.createdAt).year() === new Date().getFullYear()
             )?.balance
+
             return acc
           }, {}),
         })
@@ -92,7 +104,7 @@ export default async function NetWorth() {
       <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
         Net Worth
       </h2>
-      <DataTable data={data ?? []} columns={columns} />
+      <NetWorthCmp data={data} />
     </main>
   )
 }
