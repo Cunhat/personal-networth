@@ -21,7 +21,7 @@ export const Account: React.FC<AccountType> = ({
 }) => {
   return (
     <Link href={`/accounts/${id}`}>
-      <Card className="w-full h-full hover:bg-accent flex flex-col justify-between">
+      <Card className="hover:bg-accent flex h-full  w-full flex-col justify-between">
         <CardHeader>
           <CardTitle className="text-lg">{name}</CardTitle>
           <CardDescription>
@@ -34,7 +34,7 @@ export const Account: React.FC<AccountType> = ({
           ))}
         </CardHeader>
         <CardContent>
-          <p className="leading-7 text-lg text-end">
+          <p className="text-end text-lg leading-7">
             {Intl.NumberFormat().format(balance[0]?.balance ?? 0)} €
           </p>
         </CardContent>

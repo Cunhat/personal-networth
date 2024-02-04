@@ -62,6 +62,7 @@ export default async function Expenses() {
         }, {}),
       })
     })
+
     const totalPerMonth = months.reduce((month: any, monthIndex) => {
       const monthName = dayjs()
         .month(monthIndex)
