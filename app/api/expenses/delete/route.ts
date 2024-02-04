@@ -2,7 +2,7 @@ import { db } from "@/lib/db"
 import * as z from "zod"
 import { currentUser} from "@clerk/nextjs";
 
-export const ExpensesApiSchema = z.object({
+ const ExpensesApiSchema = z.object({
     id: z.string()
    })
 
