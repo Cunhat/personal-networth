@@ -24,13 +24,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+import { EditExpense } from "./edit-expense"
 
-export const TableActions: React.FC<CellContext<any, unknown>> = ({
-  getValue,
-  row,
-  column,
-  table,
-}) => {
+export const TableActions: React.FC<CellContext<any, unknown>> = (props) => {
   const [isSaving, setIsSaving] = React.useState<boolean>(false)
 
   const router = useRouter()
@@ -44,7 +40,7 @@ export const TableActions: React.FC<CellContext<any, unknown>> = ({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: row.original.id,
+        id: props.row.original.id,
       }),
     })
 
@@ -53,7 +49,7 @@ export const TableActions: React.FC<CellContext<any, unknown>> = ({
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
         <Icons.moreVertical className="w-4 h-4" />
       </DropdownMenuTrigger>
@@ -91,6 +87,7 @@ export const TableActions: React.FC<CellContext<any, unknown>> = ({
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+        <EditExpense {...props} />
       </DropdownMenuContent>
     </DropdownMenu>
   )

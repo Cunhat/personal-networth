@@ -47,6 +47,8 @@ export default async function Expenses() {
       data.push({
         id: expense.id,
         name: expense.name,
+        months: expense.months,
+        amount: expense.amount,
         total: expense.amount * arrayOfMonths.length,
 
         ...months.reduce((month: any, monthIndex) => {

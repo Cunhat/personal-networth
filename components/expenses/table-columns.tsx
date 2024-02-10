@@ -188,7 +188,10 @@ export const columns: ColumnDef<ExpensesData>[] = [
   {
     header: () => "",
     accessorKey: "actions",
-    cell: ({ ...props }) => <TableActions {...props} />,
+    cell: ({ ...props }) => {
+      if (props.cell.row.original.name === "Effort Rate") return null
+      return <TableActions {...props} />
+    },
     enableSorting: false,
   },
 ]
