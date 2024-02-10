@@ -54,7 +54,10 @@ type FormData = z.infer<typeof ExpensesSchema>
 
 export const EditExpense: React.FC<CellContext<any, unknown>> = ({ row }) => {
   const [isSaving, setIsSaving] = useState<boolean>(false)
-  const [selectedMonths, setSelectedMonths] = useState<string[]>([])
+  const [open, setOpen] = useState(false)
+  const [selectedMonths, setSelectedMonths] = useState<string[]>(
+    row.original.months.split("|")
+  )
   const form = useForm<FormData>({
     resolver: zodResolver(ExpensesSchema),
     defaultValues: {
@@ -66,20 +69,24 @@ export const EditExpense: React.FC<CellContext<any, unknown>> = ({ row }) => {
 
   console.log(row.original)
 
-  const onSubmit = async () => {
+  const onSubmit = async (mutateData: FormData) => {
     setIsSaving(true)
 
-    // await fetch(`/api/expenses/delete`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     id: row.original.id,
-    //   }),
-    // })
+    await fetch(`/api/expenses/edit`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: row.original.id,
+        name: mutateData.name,
+        amount: mutateData.amount,
+        months: selectedMonths.join("|"),
+      }),
+    })
 
     setIsSaving(false)
+    setOpen(false)
     router.refresh()
   }
 
@@ -92,7 +99,7 @@ export const EditExpense: React.FC<CellContext<any, unknown>> = ({ row }) => {
   }
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <DropdownMenuItem
           className="fex gap-2"
@@ -146,6 +153,7 @@ export const EditExpense: React.FC<CellContext<any, unknown>> = ({ row }) => {
                   <Toggle
                     key={month.key + index}
                     variant="outline"
+                    pressed={selectedMonths.includes(month.key)}
                     aria-label="Toggle italic"
                     onPressedChange={(value) =>
                       handleToggleMonth(value, month.key)

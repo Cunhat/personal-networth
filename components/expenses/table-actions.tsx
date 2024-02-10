@@ -49,7 +49,7 @@ export const TableActions: React.FC<CellContext<any, unknown>> = (props) => {
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
         <Icons.moreVertical className="w-4 h-4" />
       </DropdownMenuTrigger>
