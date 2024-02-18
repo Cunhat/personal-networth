@@ -12,7 +12,13 @@ import { Tag } from "@/components/tag"
 
 export const dynamic = "force-dynamic"
 
-export default async function AccountsInfo({ searchParams }) {
+export default async function AccountsInfo({
+  searchParams,
+}: {
+  searchParams: {
+    accountId: string
+  }
+}) {
   const user = await currentUser()
 
   if (!user) {

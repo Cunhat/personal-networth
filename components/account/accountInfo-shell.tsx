@@ -65,7 +65,7 @@ export const AccountInfoShell: React.FC<AccountInfoShellProps> = ({
                       <div className="flex flex-col p-2">
                         <h2>{account.name}</h2>
                         <div className="flex gap-2">
-                          {account.tags.map((tag) => (
+                          {account?.tags?.map((tag) => (
                             <Badge
                               key={tag.tagId}
                               variant="default"
