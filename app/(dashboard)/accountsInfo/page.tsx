@@ -1,14 +1,9 @@
 import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
-import { ca } from "date-fns/locale"
 
 import { db } from "@/lib/db"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
 import { Account } from "@/components/account/account"
 import { AccountInfoShell } from "@/components/account/accountInfo-shell"
-import { Icons } from "@/components/icons"
-import { Tag } from "@/components/tag"
 
 export const dynamic = "force-dynamic"
 
