@@ -9,20 +9,14 @@ import { AddBalance } from "@/components/add-balance-form"
 import { DataTable } from "@/components/table-component"
 import { Tag } from "@/components/tag"
 
+export const dynamic = "force-dynamic"
+
 interface AccountPageProps {
-  params: { accountId: string }
+  accountId: string
 }
 
-export const Account: React.FC<AccountPageProps> = async ({ params }) => {
-  const accountId = await fetch("/api/params", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-
+export const Account: React.FC<AccountPageProps> = async ({ accountId }) => {
   console.log(accountId)
-
   const account = await db.account.findUnique({
     include: {
       tags: {
@@ -35,7 +29,7 @@ export const Account: React.FC<AccountPageProps> = async ({ params }) => {
     },
 
     where: {
-      id: params.accountId,
+      id: accountId,
     },
   })
 
@@ -61,8 +55,8 @@ export const Account: React.FC<AccountPageProps> = async ({ params }) => {
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
           Balances
         </h4>
-        <AddBalance accountId={params.accountId} />
-        <Delete id={params.accountId} />
+        <AddBalance accountId={accountId} />
+        <Delete id={accountId} />
       </div>
       <p className="text-muted-foreground">
         Here&apos;s a list of your balances for the latest months!
@@ -76,16 +70,14 @@ export const Account: React.FC<AccountPageProps> = async ({ params }) => {
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
           Tags
         </h4>
-        <AddTag data={filteredTags} accountId={params.accountId} />
+        <AddTag data={filteredTags} accountId={accountId} />
       </div>
       <div className="flex flex-wrap gap-4">
         {account?.tags?.map((tag) => (
           <Tag
             key={tag.tag.id}
             name={tag.tag.name}
-            deleteSlot={
-              <RemoveTag tagId={tag.tag.id} accountId={params.accountId} />
-            }
+            deleteSlot={<RemoveTag tagId={tag.tag.id} accountId={accountId} />}
           />
         ))}
       </div>

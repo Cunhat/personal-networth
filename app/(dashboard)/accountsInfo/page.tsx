@@ -10,7 +10,9 @@ import { AccountInfoShell } from "@/components/account/accountInfo-shell"
 import { Icons } from "@/components/icons"
 import { Tag } from "@/components/tag"
 
-export default async function AccountsInfo() {
+export const dynamic = "force-dynamic"
+
+export default async function AccountsInfo({ searchParams }) {
   const user = await currentUser()
 
   if (!user) {
@@ -57,12 +59,9 @@ export default async function AccountsInfo() {
   return (
     <main className="flex flex-col h-[calc(100vh-90px)] gap-3 overflow-hidden">
       <h1 className="text-3xl font-bold">Accounts</h1>
-      <div className="grid grid-cols-2 flex-1 overflow-hidden py-4">
-        <AccountInfoShell categories={categories} accounts={accounts} />
-        <div className="overflow-auto px-4">
-          <Account params={{ accountId: "cllttt83w0009lc08mtngmzc2" }} />
-        </div>
-      </div>
+      <AccountInfoShell categories={categories} accounts={accounts}>
+        <Account accountId={searchParams.accountId} />
+      </AccountInfoShell>
     </main>
   )
 }
