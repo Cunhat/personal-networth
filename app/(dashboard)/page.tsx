@@ -22,6 +22,8 @@ export default async function Home() {
     redirect("/sign-in")
   }
 
+  console.log(user)
+
   const userDb = await db.user.findUnique({
     where: {
       email: user?.emailAddresses[0].emailAddress ?? "",
